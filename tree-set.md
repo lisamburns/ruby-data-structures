@@ -43,3 +43,9 @@ they intuitively understand each level has `2^n` nodes.
 
 **TODO**: if you take a tree and project it down onto the x-axis; it's
 a sorted array, and your search is a binary search.
+
+## Exercises
+Estimated time: 30min
+
+* Implement a `TreeSet`.
+* Populate an instance of your `TreeSet` with random numbers, then print the tree to visualize how balanced the tree is.

@@ -225,3 +225,10 @@ gets as a resource increases. That is missing from here somehow.
 ## Resources
 [Big-O Cheat Sheet][bigo]
 [bigo]: http://bigocheatsheet.com/
+
+## Exercises
+* Write a method that finds the two smallest numbers in an array.
+* Write a method that finds all the subsets of an array.
+* Write a method that finds all the subsequences of an array.
+* Measure the time each of these methods takes given different inputs; Graph out how the time of each relates to the size of the input.
+* Make faster versions of each of these methods.

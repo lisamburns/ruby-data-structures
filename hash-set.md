@@ -93,3 +93,10 @@ and produces a random-looking, scrambled number from it. Essentially,
 the computed hash value is stable; it is not actually random, so
 `obj.hash` won't ever change (for the same object). Because the hash
 value is stable, we can use it as a bucket id.
+
+##  Exercises
+Estimated time: 30min
+
+* Implement a `HashSet`.
+* Build your `HashSet` into a `HashMap`.
+* Take your `TreeSet` implementation and build that into a `TreeMap`.

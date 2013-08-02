@@ -51,3 +51,11 @@ insert). When are they ever useful?
 * Another example is from merging one sorted sequence into
   another. Here you make many inserts, but they all come in order as
   you stream through the list.
+	
+## Exercises
+Estimated time: 30min
+
+* Implement a linked list in Ruby.
+    * Your `Link` references to the `#next` link in the sequence.
+		* `LinkedList` references the first (`head`) element in the list.
+* Use your Linked List implementation to solve the [Josephus problem](http://en.wikipedia.org/wiki/Josephus_problem).
