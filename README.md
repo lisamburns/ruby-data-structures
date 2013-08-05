@@ -36,9 +36,17 @@
 * Binary Search
 * Bubble Sort
 * Merge Sort
+* Heap
 * Quick Sort
+    * Looks like I don't know QuickSort off the top of my head
+      anymore.
 
 ## Lecture VII
+
+* Trie
+* B tree
+
+## Lecture VIII
 
 * Graphs
 * Topological sort
@@ -64,10 +72,7 @@
     * queue
     * pqueue
     * stack
-* Heap
-* B tree
 * Self-balancing trees
 * Decision and game trees
-* Trie
 * Closest pairs
 * Dynamic programming: weighted interval scheduling
