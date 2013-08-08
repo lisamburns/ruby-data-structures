@@ -48,11 +48,24 @@
 
 ## Lecture VIII
 
-* [Graphs][graph]
-* Topological sort
-* Shortest paths
-* Min spanning tree
+* What is a [graph][graph]?
+* What is a graph?
+* Dijkstra's algorithm
+* Dynamic programming
+* fibonacci
+
 [graph]: ./graph.md
+
+## Lecture IX
+
+* P vs NP
+
+## Lecture X
+
+* Weighted interval scheduling problem
+* Kruskal's Algorithm?
+* Topological sort
+
 ## Lecture ?
 
 * DFS, BFS
