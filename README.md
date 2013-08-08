@@ -48,11 +48,11 @@
 
 ## Lecture VIII
 
-* Graphs
+* [Graphs][graph]
 * Topological sort
 * Shortest paths
 * Min spanning tree
-
+[graph]: ./graph.md
 ## Lecture ?
 
 * DFS, BFS
