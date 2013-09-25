@@ -44,7 +44,9 @@ class ListLink < Link
 
   def initialize(options)
     super(options)
+
     self.list = options[:list]
+    self.list.handle_insert(self)
   end
 
   def insert(value)
@@ -55,7 +57,7 @@ class ListLink < Link
       :value => value
     )
 
-    list.handle_insert(new_link)
+    self.list.handle_insert(new_link)
 
     new_link
   end
@@ -72,6 +74,8 @@ end
 
 # A linked list implementation
 class LinkedList
+  include Enumerable
+
   attr_reader :back, :front
 
   def initialize
@@ -88,19 +92,34 @@ class LinkedList
     here
   end
 
-  def append(value)
-    if @back
-      @back.insert(value)
-    else
-      @front = @back = LinkedList.new(
-        :list => self, :value => value
-      )
-    end
+  def push(value)
+    ListLink.new(
+      :list => self,
+      :value => value,
+      :prev => @back
+    )
   end
 
-  def handle_insert(link)
-    if @back.equal?(link)
-      @back = link
+  def each
+    cur = self.front
+    until cur.nil?
+      yield(cur.value)
+      cur = cur.next
+    end
+
+    nil
+  end
+
+  def empty?
+    @front.nil?
+  end
+
+  def handle_insert(new_link)
+    if @front.equal?(new_link.next)
+      @front = new_link
+    end
+    if @back.equal?(new_link.prev)
+      @back = new_link
     end
   end
 
@@ -113,3 +132,8 @@ class LinkedList
     end
   end
 end
+
+# TODO:
+# Write implementations of:
+# * Appending linked lists
+# * Drop a subseq
