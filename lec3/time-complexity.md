@@ -128,7 +128,7 @@ factorial   |O(n!)       |intractable  |subsequences
 We have hit on the crux of the computational complexity. Not only will
 an algorithm in a more complex class eventually take more time than an
 algorithm from a less complex class, the more complex algorithm will
-become slower and slower relative to the less comlex one.
+become slower and slower relative to the less complex one.
 
 Because complex algorithms become slower and slower relative to less
 complex ones, they become the bottleneck when we try to scale an
