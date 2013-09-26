@@ -1,35 +1,40 @@
 # Algorithms
 
 ## Lecture I
+
 * [Abstract Data Types][adt]
 * [Dynamic Array][dynamic-array]
+* [Example Code][dynarray-example]
 
-[adt]: ./abstract-data-types.md
-[dynamic-array]: ./dynamic-array.md
+[adt]: ./lec1/abstract-data-types.md
+[dynamic-array]: ./lec1/dynamic-array.md
+[dynarray-example]: ./lec1/example
 
 ## Lecture II
 
 * [Linked List][linked-list]
+* [Example Code][linked-list-example]
 
-[linked-list]: ./linked-list.md
+[linked-list]: ./lec2/linked-list.md
+[linked-list-example]: ./lec2/example.md
 
 ## Lecture III
 
-* [Tree Set][tree-set]
+* [Time Complexity][time-complexity]
 
-[tree-set]: ./tree-set.md
+[time-complexity]: ./lec3/time-complexity.md
 
 ## Lecture IV
 
-* [Hash Set][hash-set]
+* [Tree Set][tree-set]
 
-[hash-set]: ./hash-set.md
+[tree-set]: ./lec4/tree-set.md
 
 ## Lecture V
 
-* [Time Complexity][time-complexity]
+* [Hash Set][hash-set]
 
-[time-complexity]: ./time-complexity.md
+[hash-set]: ./lec5/hash-set.md
 
 ## Lecture VI
 
