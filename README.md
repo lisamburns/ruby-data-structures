@@ -16,7 +16,7 @@
 * [Example Code][linked-list-example]
 
 [linked-list]: ./lec2/linked-list.md
-[linked-list-example]: ./lec2/example.md
+[linked-list-example]: ./lec2/example
 
 ## Lecture III
 
