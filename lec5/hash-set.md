@@ -37,7 +37,7 @@ of a million nils, even if we only had a few elements in the set.
 
 Let's fix the space problem first. The trick is to use a smaller
 array. Instead of placing `num` at position `num`, we place it at
-position `num % store.length`. This array represents `{11, 15 25}`:
+position `num % set.length`. This array represents `{11, 15 25}`:
 
 ```
 # indices = [ 0,   1,   2,  3,  4,        5,  6,  7,  8,  9]
