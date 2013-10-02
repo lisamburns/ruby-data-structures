@@ -26,29 +26,29 @@
 
 ## Lecture IV
 
-* [Tree Set][tree-set]
+* [Hash Set][hash-set]
 
-[tree-set]: ./lec4/tree-set.md
+[hash-set]: ./lec4/hash-set.md
 
 ## Lecture V
 
-* [Hash Set][hash-set]
+* [Tree Set][tree-set]
+* Trie
+* Heap
 
-[hash-set]: ./lec5/hash-set.md
+[tree-set]: ./lec5/tree-set.md
 
 ## Lecture VI
 
 * Binary Search
 * Bubble Sort
 * Merge Sort
-* Heap
 * Quick Sort
     * Looks like I don't know QuickSort off the top of my head
       anymore.
 
 ## Lecture VII
 
-* Trie
 * B tree
 
 ## Lecture VIII
