@@ -44,7 +44,7 @@ insert). When are they ever useful?
 * LL are used when you have lots of inserts/removals near either end,
   and never want to wait for a resize.
 * Textbook example: a *queue*
-    * Items enter at ony end, exit at the front; so only the ends are
+    * Items enter at one end, exit at the front; so only the ends are
       accessed.
     * Never have to worry about dynamic array resizing
 * Another example is the Josephus problem.
