@@ -43,26 +43,6 @@
 * [Day of the Sorts][./lec6/sorting.md]
 * Binary Search
 * Linear search
-
-## Todo
-
-* B tree
-* What is a [graph][graph]?
-* What is a graph?
-* Dijkstra's algorithm
-* Dynamic programming
-* fibonacci
-* P vs NP
-* Weighted interval scheduling problem
-* Kruskal's Algorithm?
-* Topological sort
-* DFS, BFS
-* A*
-* Shortest path
-* Backtracking search
-* Self-balancing trees
-* Decision and game trees
-* Closest pairs
-* Dynamic programming: weighted interval scheduling
+* Toplogical Sort
 
 [graph]: ./graph.md
