@@ -8,7 +8,7 @@
 
 [adt]: ./lec1/abstract-data-types.md
 [dynamic-array]: ./lec1/dynamic-array.md
-[dynarray-example]: ./lec1/example
+[dynarray-example]: ./code/lec1
 
 ## Lecture II
 
@@ -44,5 +44,3 @@
 * Binary Search
 * Linear search
 * Toplogical Sort
-
-[graph]: ./graph.md

@@ -30,5 +30,3 @@
     * This requires copying all the addresses
 * NB: The store can keep extra space on both sides of the array for
   extra elements.
-
-**TODO**: show an implementation.
