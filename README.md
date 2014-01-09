@@ -27,8 +27,10 @@
 ## Lecture IV
 
 * [Hash Set][hash-set]
+* [Example code][hash-set-example]
 
 [hash-set]: ./lec4/hash-set.md
+[hash-set-example]: ./code/lec4
 
 ## Lecture V
 
