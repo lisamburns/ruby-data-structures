@@ -10,7 +10,7 @@
   and next links.
     * Likewise, we keep track of both first and last links in the
       chain.
-    * A linked list makes it possible to go backward and forward
+    * A doubly linked list makes it possible to go backward and forward
       through the list.
 * **Indexing is typically slow**; the worst items to access are at the
   end. To get to the end, you need to follow link by link.
