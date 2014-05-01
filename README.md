@@ -27,7 +27,7 @@
 ## Lecture IV
 
 * [Hash Set][hash-set]
-* [Example code][hash-set-example]
+* [Example Code][hash-set-example]
 
 [hash-set]: ./lec4/hash-set.md
 [hash-set-example]: ./code/lec4
@@ -37,8 +37,10 @@
 * [Tree Set][tree-set]
 * Trie
 * Heap
+* [Example Code][heap-example]
 
 [tree-set]: ./lec5/tree-set.md
+[heap-example]: ./code/lec5
 
 ## Lecture VI
 
@@ -46,3 +48,8 @@
 * Binary Search
 * Linear search
 * Toplogical Sort
+* LRU Cache
+
+## Lecture VII
+
+* [Graphs](./lec7/graph.md)
