@@ -56,8 +56,14 @@ class MaxIntSet
 end
 
 class IntHashSet
+  DEFAULT_SIZE = 8
+  MAX_LOAD = 1.00
+
+  attr_reader :count
+
   def initialize
-    @buckets = Array.new(8) { [] }
+    @buckets = Array.new(DEFAULT_SIZE) { [] }
+    @count = 0
   end
 
   def include?(value)
@@ -66,27 +72,49 @@ class IntHashSet
 
   def insert(value)
     return if include?(value)
+
+    # Resize if we would exceed max load.
+    self.resize! if (count + 1).fdiv(num_buckets) > MAX_LOAD
+
     bucket_for(value) << value
+    @count += 1
   end
 
   def remove(value)
     return unless include?(value)
     bucket_for(value).delete(value)
+    @count -= 1
   end
 
   protected
-  def bucket_for(value)
-    @buckets[value % num_buckets]
+  def bucket_for(value, buckets = @buckets)
+    buckets[value_hash(value) % buckets.length]
+  end
+
+  def value_hash(value)
+    value
   end
 
   def num_buckets
     @buckets.length
   end
+
+  def resize!
+    new_buckets = Array.new(num_buckets * 2) { [] }
+    # Takes O(n) time despite double loops.
+    self.buckets.each do |bucket|
+      bucket.each do |item|
+        bucket_for(item, new_buckets) << item
+      end
+    end
+
+    @buckets = new_buckets
+  end
 end
 
 class HashSet < IntHashSet
   protected
-  def bucket_for(value)
-    @buckets[value.hash % num_buckets]
+  def value_hash(value)
+    value.hash
   end
 end
