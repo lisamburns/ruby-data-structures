@@ -1,18 +1,18 @@
-* Dynamic Array
-    * Memory, pointer arithmetic
 * Time Complexity
     * Amortized Time Complexity of DynArray push
+* Dynamic Array
+    * Memory, pointer arithmetic
 * Hash Set
     * ArrayIntSet (`O(MAX_VAL)` memory)
     * IntHashSet (only ints)
     * Store by hash value
-* Heaps and packed representation
+* LinkedList, LRUCache
 * Sorting
     * MergeSort
     * QuickSort
     * HeapSort
-* LinkedList, LRUCache
 * BSTs; self-balancing tree
+* Heaps and packed representation
 * Graphs
     * Different versions of time complexity
     * BFS
