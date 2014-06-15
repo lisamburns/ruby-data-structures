@@ -53,6 +53,7 @@ class LinkedListLink < Link
 
   def insert_after(link)
     list.send(:tail=, self) if link == list.tail
+    super
   end
 
   def insert_before(link)
@@ -74,6 +75,23 @@ class LinkedList
     @head, @tail = nil, nil
   end
 
+  # O(n): don't use me!
+  def [](idx)
+    raise "index out of bounds" if idx < 0
+
+    link = self.front
+    idx.times do
+      raise "index out of bounds" if link.nil?
+      link = link.next
+    end
+
+    link
+  end
+
+  def empty?
+    head.nil?
+  end
+
   def new_link(value)
     LinkedListLink.new(self, value)
   end
@@ -85,7 +103,7 @@ class LinkedList
   end
 
   def push(link)
-    if @tail.nil?
+    if empty?
       @head = @tail = link
     else
       link.insert_after(tail)
@@ -99,7 +117,7 @@ class LinkedList
   end
 
   def unshift(link)
-    if @head.nil?
+    if empty?
       @head = @tail = link
     else
       link.insert_before(@head)
