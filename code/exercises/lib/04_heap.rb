@@ -3,6 +3,10 @@ class BinaryMinHeap
     @store = []
   end
 
+  def count
+    @store.length
+  end
+
   def extract
     val = @store[0]
     @store[0] = @store.pop
@@ -11,7 +15,7 @@ class BinaryMinHeap
 
   def push(val)
     @store << val
-    heapify_up(@store.length - 1)
+    heapify_up(self.count - 1)
   end
 
   protected
@@ -34,7 +38,9 @@ class BinaryMinHeap
     # (4) Therefore, the children of parent live at `2 * parent_index
     # + 1` and `2 * parent_index + 2`.
 
-    [2 * parent_index + 1, 2 * parent_index + 2]
+    [2 * parent_index + 1, 2 * parent_index + 2].select do |idx|
+      idx < self.count
+    end
   end
 
   def parent_index(child_index)

@@ -1,3 +1,5 @@
+require_relative '04_heap'
+
 class Array
   # Uses O(n) memory. Always takes O(nlogn) time.
   def merge_sort
@@ -81,7 +83,38 @@ class Array
   end
 end
 
+class HeapSorter < BinaryMinHeap
+  attr_reader :count
+
+  def initialize(array)
+    @store = array
+    @count = 0
+  end
+
+  def run
+    @store.length.times { self.push }
+    @store.length.times { self.pop }
+  end
+
+  protected
+  def push
+    @count += 1
+    heapify_up(count - 1)
+  end
+
+  def pop
+    popped_value = @store[0]
+    @store[0] = @store[self.count - 1]
+    @count -= 1
+    heapify_down(0)
+
+    @store[self.count] = popped_value
+  end
+end
+
 class Array
-  def heap_sort
+  def heap_sort!
+    HeapSorter.new(self).run
+    self
   end
 end
