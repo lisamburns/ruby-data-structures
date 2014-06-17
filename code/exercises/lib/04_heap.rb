@@ -9,8 +9,16 @@ class BinaryMinHeap
 
   def extract
     val = @store[0]
-    @store[0] = @store.pop
-    heapify_down(0)
+
+    if count > 1
+      @store[0] = @store.pop
+      heapify_down(0)
+    else
+      # Last element left.
+      @store.pop
+    end
+
+    val
   end
 
   def push(val)
@@ -39,6 +47,7 @@ class BinaryMinHeap
     # + 1` and `2 * parent_index + 2`.
 
     [2 * parent_index + 1, 2 * parent_index + 2].select do |idx|
+      # Only keep those in range.
       idx < self.count
     end
   end
@@ -58,12 +67,14 @@ class BinaryMinHeap
   def heapify_down(parent_idx)
     l_child_idx, r_child_idx = child_indices(parent_idx)
     parent_val, l_child_val, r_child_val =
-      @store[parent_idx], @store[l_child_idx], @store[r_child_idx]
+      @store[parent_idx],
+      l_child_idx && @store[l_child_idx],
+      r_child_idx && @store[r_child_idx]
 
     # We compact because `l_child_val`, `r_child_val` could be nil if
     # any child indices are outside the range of the store.
     heap_prop_valid = [l_child_val, r_child_val].compact.all? do |child_val|
-      child_val <= parent_val
+      child_val >= parent_val
     end
 
     if heap_prop_valid
@@ -81,9 +92,10 @@ class BinaryMinHeap
 
   def heapify_up(child_idx)
     return if child_idx == 0
+
     parent_idx = parent_index(child_idx)
     child_val, parent_val = @store[child_idx], @store[parent_idx]
-    if child_val <= parent_val
+    if child_val >= parent_val
       # Heap property valid!
       return
     else

@@ -115,6 +115,6 @@ end
 class Array
   def heap_sort!
     HeapSorter.new(self).run
-    self
+    self.reverse!
   end
 end
