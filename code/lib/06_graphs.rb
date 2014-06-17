@@ -14,6 +14,13 @@ class Edge
     from_vertex.out_eges << self
     @cost = cost
   end
+
+  def destroy!
+    self.to_vertex.out_edges.delete(self)
+    self.to_vertex = nil
+    self.from_vertex.in_edges.delete(self)
+    self.from_vertex = nil
+  end
 end
 
 # Runs in O(|E|) time.
@@ -110,4 +117,27 @@ end
 
 def dijkstras_algorithm3(source)
   # TODO: Need heap with reduce_key. Ugh.
+end
+
+def prims_algorithm
+  # TODO: Again with the heap.
+end
+
+# O(|V| + |E|). Destroys the graph; we could create a copy and destroy
+# that instead.
+def topological_sort(sources)
+  ordered_vertices = []
+
+  until sources.empty?
+    v1 = sources.shift
+    ordered_vertices << v1
+
+    v1.out_edges do |e|
+      v2 = e.to_vertex
+      e.destroy!
+      sources << v2 if v2.in_edges.empty?
+    end
+  end
+
+  ordered_vertices
 end
