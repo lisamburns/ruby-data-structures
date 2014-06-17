@@ -1,3 +1,5 @@
+# Topics
+
 * Time Complexity
     * Amortized Time Complexity of DynArray push
 * Dynamic Array
@@ -6,6 +8,7 @@
     * ArrayIntSet (`O(MAX_VAL)` memory)
     * IntHashSet (only ints)
     * Store by hash value
+    * Hashing Passwords: Salting, Blowfish
 * LinkedList, LRUCache
 * Sorting
     * MergeSort
@@ -15,7 +18,7 @@
 * Heaps and packed representation
 * Graphs
     * Different versions of time complexity
-    * BFS
+    * BFS shortest paths
     * Dijkstra's
     * Prim's Algorithm
 * Database Scalability, Transaction Processing
@@ -23,3 +26,25 @@
     * MVCC, write skew
 * Concurrency: threads and events
     * MapReduce
+
+## Coursera Algorithms I
+
+* Strassen's matrix mult
+* Closest pairs.
+* Counting inversions.
+* Bloom filters
+* Graph representations
+* Min cut?
+* Topological sort <=
+* Strongly connected components.
+
+## Coursera Algorithms II
+
+* Scheduling
+* Clustering
+* Union-find, Path Compression.
+* Bellman Ford
+* Floyd-Warshall, Johnson's Algorithm (all pairs shortest path!)
+* NP Complete, Knapsack, Vertex Cover, TSP
+* Approximation Algorithms.
+* Dynamic Programming.
