@@ -115,6 +115,8 @@ def dijkstras_algorithm2(source)
   shortest_paths
 end
 
+# O(|V| + |E| * log(|V|). This is better if edges are spare (E in
+# O(|V|)).
 def dijkstras_algorithm3(source)
   # TODO: Need heap with reduce_key. Ugh.
 end
