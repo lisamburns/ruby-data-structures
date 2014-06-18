@@ -10,16 +10,24 @@
     * Store by hash value
     * Hashing Passwords: Salting, Blowfish
 * LinkedList, LRUCache
+* BSTs; self-balancing tree
+    * Balancing can't go wrong.
+    * No O(n) worst case
+    * In-order traversal
+    * Let's say you have an itinerary. At any moment, you want to know
+      the next thing to do. You also want to add new itinerary items
+      at any time quickly.
+    * Traversal algorithms.
+* Heaps and packed representation
+    * Priority queue.
 * Sorting
     * MergeSort
     * QuickSort
     * HeapSort
-* BSTs; self-balancing tree
-* Heaps and packed representation
 * Graphs
     * Different versions of time complexity
-    * BFS shortest paths
     * Topological Sort
+    * BFS shortest paths
     * Dijkstra's
     * Prim's Algorithm
 * Database Scalability, Transaction Processing
