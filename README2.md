@@ -19,6 +19,7 @@
 * Graphs
     * Different versions of time complexity
     * BFS shortest paths
+    * Topological Sort
     * Dijkstra's
     * Prim's Algorithm
 * Database Scalability, Transaction Processing
@@ -29,13 +30,11 @@
 
 ## Coursera Algorithms I
 
-* Strassen's matrix mult
+* Strassen's matrix mult.
 * Closest pairs.
 * Counting inversions.
 * Bloom filters
-* Graph representations
 * Min cut?
-* Topological sort <=
 * Strongly connected components.
 
 ## Coursera Algorithms II
