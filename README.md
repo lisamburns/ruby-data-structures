@@ -44,11 +44,13 @@
 
 ## Lecture VI
 
-* [Day of the Sorts][./lec6/sorting.md]
+* [Day of the Sorts][day-sorts]
 * Binary Search
 * Linear search
 * Toplogical Sort
 * LRU Cache
+
+[day-sorts]: ./lec6/sorting.md
 
 ## Lecture VII
 
