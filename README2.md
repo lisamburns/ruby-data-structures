@@ -1,15 +1,40 @@
 # Topics
 
+## Lec 1
+
 * Time Complexity
-    * Amortized Time Complexity of DynArray push
+* CatMatch
+* Table of Time Complexities
+
+## Lec 2-3
+
 * Dynamic Array
-    * Memory, pointer arithmetic
+* Memory, pointer arithmetic
+* Amortized Time Complexity of DynArray push 
+
+## Lec 3-4
+
 * Hash Set
     * ArrayIntSet (`O(MAX_VAL)` memory)
     * IntHashSet (only ints)
-    * Store by hash value
+    * How to hash keys
     * Hashing Passwords: Salting, Blowfish
-* LinkedList, LRUCache
+* HashMap
+
+## Lec 5
+
+* LinkedList
+    * Not required for efficient `select`. `select!`.
+    * Not required for dequeue (can use a ring buffer)
+* Ex: LRUCache
+
+## Lec 6
+
+* Heaps and packed representation
+    * Priority queue.
+
+## Lec 7-8
+
 * BSTs; self-balancing tree
     * Balancing can't go wrong.
     * No O(n) worst case
@@ -18,12 +43,16 @@
       the next thing to do. You also want to add new itinerary items
       at any time quickly.
     * Traversal algorithms.
-* Heaps and packed representation
-    * Priority queue.
+
+## Lec9
+
 * Sorting
     * MergeSort
     * QuickSort
     * HeapSort
+
+## And Beyond!
+
 * Graphs
     * Different versions of time complexity
     * Topological Sort
