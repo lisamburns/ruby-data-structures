@@ -32,8 +32,18 @@
 
 * Heaps and packed representation
     * Priority queue.
+* Uses: work-queue, max k items, Dijkstra's Algorithm.
 
-## Lec 7-8
+## Lec7-8
+
+* Sorting
+    * MergeSort
+    * QuickSort
+    * HeapSort
+* RAM Caching
+* CPU Architecture
+
+## Lec 9
 
 * BSTs; self-balancing tree
     * Balancing can't go wrong.
@@ -43,13 +53,6 @@
       the next thing to do. You also want to add new itinerary items
       at any time quickly.
     * Traversal algorithms.
-
-## Lec9
-
-* Sorting
-    * MergeSort
-    * QuickSort
-    * HeapSort
 
 ## And Beyond!
 
@@ -68,7 +71,7 @@
 ## Coursera Algorithms I
 
 * Strassen's matrix mult.
-* Closest pairs.
+* Closest pairs. <<<
 * Counting inversions.
 * Bloom filters
 * Min cut?
