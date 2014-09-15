@@ -10,7 +10,7 @@
 
 * Dynamic Array
 * Memory, pointer arithmetic
-* Amortized Time Complexity of DynArray push 
+* Amortized Time Complexity of DynArray push
 
 ## Lec 3-4
 
@@ -43,18 +43,23 @@
 * RAM Caching
 * CPU Architecture
 
-## Lec 9
+## Lec 9-Lec 10
 
 * BSTs; self-balancing tree
     * Balancing can't go wrong.
     * No O(n) worst case
     * In-order traversal
-    * Let's say you have an itinerary. At any moment, you want to know
-      the next thing to do. You also want to add new itinerary items
-      at any time quickly.
-    * Traversal algorithms.
+* Traversal algorithms.
+    * Database index
+    * Optimizes where using comparison, and order by.
+    * What is the time complexity of pkey lookup? Seems like
+      sort-merge join is O(nlog n) if it's O(log n) to look up an
+      record by pkey. Same would apply for hash join??
+    * Maybe duplicates of all columns are stored in the index?? Isn't
+      that super wasteful?
+    * Btree is more memory friendly than hashes, BTW.
 
-## And Beyond!
+## Lec 11-Lec 12
 
 * Graphs
     * Different versions of time complexity
@@ -62,6 +67,10 @@
     * BFS shortest paths
     * Dijkstra's
     * Prim's Algorithm
+
+## And Beyond!
+
+* B-Trees
 * Database Scalability, Transaction Processing
     * Locking, anomolies
     * MVCC, write skew
