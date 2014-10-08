@@ -107,22 +107,6 @@ This is different than `min, two_min` examples: the `two_min`
 algorithm will always be twice as slow as `min`, no matter the number
 of elements.
 
-## Tractability
-
-```
-name        |big-oh      |tractability |example
------------------------------------------------------
-constant    |O(1)        |trivial      |hash maps
-logarithmic |O(log(n))   |simple       |binary search
-linear      |O(n)        |typical      |linear scans
-            |O(n*log(n)) |moderate     |sorting
-quadratic   |O(n**2)     |tough        |pairing
-exponential |O(2**n)     |intractable  |subsets
-factorial   |O(n!)       |intractable  |subsequences
-```
-
-**TODO**: add descriptions of these classes.
-
 ## Time complexity and algorithm components
 
 We have hit on the crux of the computational complexity. Not only will

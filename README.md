@@ -1,18 +1,26 @@
 # Topics
 
-## Lec 1
+## Lecture 1: Cat Match and Time Complexity
 
-* Time Complexity
-* CatMatch
-* Table of Time Complexities
+* [Time Complexity][time-complexity]
 
-## Lec 2-3
+[time-complexity]: ./lecture-01/time-complexity.md
+
+## Lecture 2: Big-Oh and Table of Time Complexities
+
+* [Big O Notation][big-o-notation]
+* [Table of Time Complexities][table-of-time-complexities]
+
+[big-o-notation]: ./lecture-02/big-o-notation.md
+[table-of-time-complexities]: ./lecture-02/table-of-time-complexities.md
+
+## Lecture 3-4
 
 * Dynamic Array
 * Memory, pointer arithmetic
 * Amortized Time Complexity of DynArray push
 
-## Lec 3-4
+## Lecture 4-5
 
 * Hash Set
     * ArrayIntSet (`O(MAX_VAL)` memory)
@@ -21,20 +29,20 @@
     * Hashing Passwords: Salting, Blowfish
 * HashMap
 
-## Lec 5
+## Lecture 6
 
 * LinkedList
     * Not required for efficient `select`. `select!`.
     * Not required for dequeue (can use a ring buffer)
 * Ex: LRUCache
 
-## Lec 6
+## Lecture 7
 
 * Heaps and packed representation
     * Priority queue.
 * Uses: work-queue, max k items, Dijkstra's Algorithm.
 
-## Lec7-8
+## Lecture 8-9
 
 * Sorting
     * MergeSort
@@ -43,7 +51,7 @@
 * RAM Caching
 * CPU Architecture
 
-## Lec 9-Lec 10
+## Lecture 9-10
 
 * BSTs; self-balancing tree
     * Balancing can't go wrong.
@@ -59,7 +67,7 @@
       that super wasteful?
     * Btree is more memory friendly than hashes, BTW.
 
-## Lec 11-Lec 12
+## Lecture 11-12
 
 * Graphs
     * Different versions of time complexity
