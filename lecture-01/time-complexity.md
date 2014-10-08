@@ -1,218 +1,234 @@
-# Time complexity (big-oh)
+# Time complexity
 
-## Basic complexity classes
+## CatMatch
 
-Most of the time, when you have twice as much work to do, it takes you
-twice as long to do the work. Take, for instance, adding up a list of
-numbers. Twice as many numbers means twice as many numbers to add; it
-should take twice as long to add them all. That seems fair; this is
-called a **linear** problem.
+Say I want to adopt two cats at the SF SPCA. I want to adopt the most
+compatible pair of cats: the ones who will get on best with each other.
+I will describe an algorithm to do this.
 
-Some tasks get harder and harder. Imagine a set of 5 switches where
-only one combination of settings (on/off) will activate a
-circuit. There are `2**5` settings. Each time we add an additional
-switch, there are twice as many settings to check. This problem
-becomes harder and harder as we add additional switches. This is
-called an **exponential** problem; these are some of the worst kind of
-problems.
+**Phase I**: I will have a psychologist interview each cat. The
+psychologist will talk with each cat, giving them scores on a variety
+of measures. The psychologist files a report on each cat, producing a
+table like:
 
-Other problems have economies of scale where we can solve much bigger
-problems with just a little more work. Consider a problem where we
-would like to implement a spell-checker; we need to store a dictionary
-set, but we also need to balance the comprehensiveness of the
-dictionary with the time it will take to lookup a word.
+name|jumping|meowing|napping
+markov|0.5|0.75|0.1
+curie|0.9|0.6|0.8
+breakfast|0.2|0.3|0.6
 
-Let's use a tree set. If we want to limit ourselves to making 10
-comparisons, we can store a dictionary of `2**10 = 1024` words. At the
-cost of one additional comparison, we could double the size of the
-dictionary (1024 new words). And an additional comparison after that
-doubles the size again (another 2048 words). The cost of adding a new
-word to the dictionary is going down as the dictionary gets bigger.
-
-This is a very desirable kind of problem; it is called
-**logarithmic**.
-
-These are our first three *complexity classes*: logarithmic, linear,
-and exponential. We'll see a few others soon.
-
-## Run-time
-
-Just because two algorithms belong to the same complexity class
-doesn't mean they will take the same amount of time to solve the same
-size of problem. For instance, here's an algorithm to find the
-smallest number in an array:
+The idea is that each row describes a cat's personality. In
+pseudo-code, we could write something like:
 
 ```ruby
-def min(nums)
-  min = nums.first
-  nums.each { |n| min = n if n < min }
+def cat_profiles(cats)
+  # using each explicitly for clarity later; you should use `map`
+  cat_profiles = []
+  cats.each do |cat|
+    # we won't get into how an individual cat is profiled.
+    cat_profiles << cat_profile(cat)
+  end
 
-  min
+  cat_profiles
 end
 ```
 
-This does one comparison per element, for `n` comparisons total. The
-algorithm is linear in the number of elements. Here's a second
-algorithm, which finds the two smallest numbers:
+**Phase II**: To find the most compatible cats, we need to compare
+their personality profiles. Perhaps we believe that the two cats with
+the most similar personality profiles will be the most compatible. Our
+assumption is that similarities attract.
+
+Let's not concern ourselves overly with how we evaluate the similarity
+of the cat profiles. A natural choice might be to treat the profiles
+as points in an 3-dimensional space; the "similarity" could be -1
+times the distance between the two points. But that part isn't very
+important.
+
+A straightforward way to find the most similar pair of cats is like so:
 
 ```ruby
-def two_min(nums)
-  min1, min2 = nums[0], nums[1]
+def best_pair(cat_profiles)
+  best_pair, best_similarity = nil, nil
+  profiles.each do |(cat1, profile1)|
+    profiles.each do |(cat2, profile2)|
+      next if cat1 == cat2
 
-  nums.each do |n|
-    if n < min1
-      min1, min2 = n, min1
-    elsif n < min2
-      min2 = n
+      # we won't get into how two profiles are compared.
+      similarity = similarity(profile1, profile2)
+      next if best_similarity && best_similarity < similarity
+
+      best_pair, best_similarity = [cat1, cat2], best_similarity
     end
   end
 
-  return [min1, min2]
+  best_pair
 end
 ```
 
-This does two comparisons for each element in the array, for `2n`
-comparisons total. This is again linear in the number of elements, but
-we expect it to be about twice as slow.
+This runs the inner block *for every pair of cats*. It computes their
+similarity, and checks whether this is better than the best similarity
+we've seen thus far.
 
-## Complexity class, problem growth, and run-time
+## How Fast Is CatMatch?
 
-We've seen that two algorithms in the same complexity class may take a
-different amount of time to solve the same size problem. What about
-algorithms from different classes?
+How fast is our algorithm to solve CatMatch.
 
-For "large enough" problem sizes, a logarithmic algorithm will always
-run faster than a linear algorithm, which will in turn be faster (for
-large enough problems) than an exponential algorithm. This is because
-the time it takes to run these algorithms grows at different rates.
+This depends on two things: the number of cats we're profiling, and
+the amount of time it takes to execute `cat_profile(cat)` and
+`similarity(profile1, profile2)`. Treating the number of cats and
+these times as variables, the equation for the total time to run the
+algorithm is:
 
 ```
-        n=   1| 2| 4|  8|    16
----------------------------------
-32+log(n):  32|33|34| 35|    36
-      8*n:   8|16|32| 64|   128
-     2**n:   2| 4|16|256|65,536
+TIME_TO_RUN_ALGORITHM =
+  (NUMBER_OF_CATS) * (TIME_TO_PROFILE_CAT)
+  + (NUMBER_OF_CAT_PAIRS) * (TIME_TO_COMPARE_PROFILES)
 ```
 
-Here we can see that the true colors of the log, linear, and
-exponential algorithms eventually show.
+A key question is what is `NUMBER_OF_CAT_PAIRS`. Each pair consists of
+two different cats. If there are `n` cats total, then there are `n`
+choices for the first cat, and `n-1` choices for a second, different
+cat. That means there are `n(n-1)` pairs.
 
-Notice that for `n=8`, the linear algorithm runs `256/64=4` times as
-fast as the exponential solution. For `n=16`, the gap increases to
-`65,536/128`, or 512x as fast. Again, because algorithms in each class
-grow at different rates, algorithms in a more complex class will take
-more-and-more time relative to algorithms in simpler classes.
+However, notice that the pair `(markov, curie)` and `(curie, markov)`
+both contain the same two cats. Every pair has a twin the reverses the
+order. So the total number of *unordered pairs* is `n(n-1)/2`.
 
-This is different than `min, two_min` examples: the `two_min`
-algorithm will always be twice as slow as `min`, no matter the number
-of elements.
+Using this equation, we have:
 
-## Time complexity and algorithm components
+```
+TIME_TO_RUN_ALGORITHM =
+  n * (TIME_TO_PROFILE_CAT)
+  + (n(n-1)/2) * (TIME_TO_COMPARE_PROFILES)
+```
 
-We have hit on the crux of the computational complexity. Not only will
-an algorithm in a more complex class eventually take more time than an
-algorithm from a less complex class, the more complex algorithm will
-become slower and slower relative to the less complex one.
+I've continued to use `n` to stand for the number of cats. Now, if we
+know the number of cats and the times it takes to profile a cat and
+compare two profiles, we can calculate the time for the whole
+algorithm.
 
-Because complex algorithms become slower and slower relative to less
-complex ones, they become the bottleneck when we try to scale an
-algorithm which is composed of some simpler and some more complex
-components. Let's work through an example.
+## Behavior As The Number of Cats Grow
 
-Suppose I would like to adopt two cats. I would like both cats to be
-as compatible as possible, so I decide to exhaustively interview each
-cat. I then need to consider each pair of cats, and compare their
-surveys to check for compatibility. I pick the pair with the highest
-compatibility.
+Let's say that it takes 1,000sec for the psychologist to conduct an
+extensive cat interview. On the other hand, once we've boiled down the
+cat to a series of numbers, let's say it takes 1sec to compute the
+similarity of two profiles. Then:
 
-Roughly speaking, there are two phases of the algorithm. The first is
-the interview process; I must interview each cat. As the number of
-cats under consideration grows, the number of interviews I conduct
-also grows. Because of the exhaustiveness of the survey, this may take
-a long time. Still, the time complexity of this component is linear in
-the number of cats.
+    TIME_TO_RUN_ALGORITHM = n * 1000 + (n(n-1) / 2) * 1
 
-The second phase is where I evaluate pairs of cat surveys. There are
-`n*(n-1)/2` possible pairings of `n` cats. Each cat (`n` of them) can
-be paired with any of the other cats (`n-1` of them). But we have to
-avoid double-counting pairs where the order is swapped: `{i1, i2} ==
-{i2, i1}`. This gives us the factor of `/2`. The number of potential
-pairs is *quadratic* (another complexity class). The number of pairs
-to consider grows proportional to the square of the number of
-cats.
+Breaking this out in a table:
 
-For small numbers of cats, there are relatively few pairs to consider,
-and we end up spending more time interviewing cats than comparing
-them.
+Number of cats|Time for Phase I|Time for Phase II|Total Time
+--------------|----------------|-----------------|----------
+10            |10,000          |45               |10,045
+100           |100,000         |4,950            |104,950
+1,000         |1,000,000       |499,500          |1,499,500
+10,000        |10,000,000      |49,995,000       |59,995,000
+100,000       |100,000,000     |4,999,950,000    |5,099,950,000
 
-As the number of cats considered grows, the time spent interviewing
-cats grows linearly with the number of cats, while the time spent
-comparing cats grows quadratically. As we've said before, the time
-spent comparing cats will eventually overtake and then dominate the
-time spent interviewing cats. No matter how extensive the
-interviewing, for large enough numbers of cats, we'll spend `>99%`
-(and for yet larger numbers, `99.9%`, `99.99%`, `99.999%`, ...) of our
-time comparing cats.
+What we see here is that the time for Phase I grows **linearly** in
+the number of cats: if we 10x the number of cats, Phase I takes 10x as
+long.
 
-### Optimization
+On the other hand, the time for Phase II grows **quadratically** in
+the number of cats: if we 10x the number of cats, Phase II takes
+nearly 100x as long.
 
-We can assume that I would like to reduce the time I spend choosing
-cats so that I can maximize the time I spend playing with cats. But I
-also would like to perform an exhaustive search among a large number
-of cats. This means I would like to improve, or *optimize*, my
-algorithm so that I can more quickly choose a pair of cats.
+We say that Phase II **dominates** Phase I as the number of cats
+increases. With 10 cats, Phase II takes 0.45% of the total time. With
+100 cats it takes 4.7% of the total time. With 1,000 cats it takes 33%
+of the total time. With 100,000 cats, it takes 98% of the total time.
 
-Since I know that for large number of cats most of the time will be
-spent comparing pairs of cats, it makes sense for me to optimize this
-process. If 99% of the time is spent comparing cats, if I can halve
-the time I spend comparing cat surveys, I can save `99% * 50% = 49.5%`
-of the time I spend in total.
+As the number of cats increases, the percentage of time spent in Phase
+II will grow to be closer and closer to 100%. This happens because
+quadratic functions grow faster and faster than linear functions.
 
-On the other hand, it is profitless to streamline the interview
-process if this accounts for `1%` of the total time.
+## Runtime in seconds is always changing
 
-## Scalability
+We've seen that the time it takes to run an algorithm depends on (1)
+the "size" of the problem (e.g., in CatMatch more cats is a bigger
+problem) and (2) how fast we can perform operations (e.g., how fast
+`profile(cat)` and `similarity(profile1, profile2)` run).
 
-Because computationally complex algorithms require more and more time
-to run relative to the size of a problem, they are not particularly
-*scalable*.
+For many years, CPU speeds reliably increased each year. What took 100
+seconds in 1999 might take 10 seconds in 2000. This meant that a
+single absolute measure of time could not capture how the algorithm
+would perform as CPU speeds changed.
 
-In general, a scalable problem should have the characteristic that we
-can solve twice as big a problem with twice as many resources. If I
-run a manufacturing plant, I expect to be able to produce twice as
-many widgets with twice as many workers.
+Moreover, the sizes of problems are constantly growing. Facebook
+doesn't just care how fast code will run for 1 million users; they
+want to know that as they grow to 100 million users there are no
+obvious bottlenecks.
 
-On the other hand, if I run a restaurant, I can't expect to produce
-twice as good a soup with twice as many cooks. Maybe a second cook
-could help advise the first one, but pretty soon the cooks are getting
-in each other's way. Soup quality isn't scalable.
+If we only cared about solving problems of a fixed, limited size, time
+complexity would not be very important. The importance of
+*scalability* is baked into our adoption of time complexity as a
+measure of algorithm performance.
 
-In the real world, businesses tend to grow until they hit
-bottlenecks. To break past these you need to identify and optimize the
-bottleneck.
+## Understanding time complexity helps us target optimizations
 
-Computational complexity lets you project forward and identify
-components of your algorithms which will eventually become
-bottlenecks.
+Time complexity helps us target our optimizations appropriately.
 
-**TODO**: this doesn't really capture the relationship I
-want. Computational complexity also describes how much better life
-gets as a resource increases. That is missing from here somehow.
+Say that I want to make CatMatch faster. I think of two optimizations:
+(1) make Phase I 100x faster or (2) make Phase II 5% faster. Say that
+both optimizations will take me an equal amount of effort to code up.
+Which should I choose?
 
-## TODO
+Optimization 1 sounds impressive, whereas optimization 2 sounds minor.
+However, we know that for large numbers of cats, Phase II takes closer
+and closer to 100% of the total time. That means Phase I takes closer
+to 0% of the total time.
 
-* worst-case vs avg-case
-* computational model; primitive steps
-* How is problem size measured
-* Memory
+When we have 100,000 cats, we saw that Phase I takes 2% of the total
+time. So a 100x improvement in Phase I will reduce the total runtime
+by 1.8%. On the other hand, optimizing Phase II by 1% will result in a
+savings of `(98% * 5%) = 4.9%` of total time.
+
+As we have even more cats, the time savings of optimizing Phase I will
+fall toward 0%, while the time savings of optimizing Phase II will
+approach 5%.
+
+Time complexity helps us understand that we should try to speed up
+bottlenecks, not the already fast parts of our algorithms.
+
+## Eliminating Bottlenecks
+
+We've seen that time complexity helps us identify bottlenecks, which
+we can target with optimizations. We can also try to eliminate them
+entirely.
+
+Recall that we want to find the most similar cats in CatMatch. To do
+this, we compared every pair of cats.
+
+If we think of our cat profiles as points in an multi-dimensional
+space (one dimension per profile category), we might say that two cats
+are the most similar if their profile-points are the closest pair in
+the space. This problem is called the [closest pair of points
+problem][closest-pair]. There is a very clever algorithm that, by
+dividing up the space, can find the closest pair of points in
+time proportional to `n*log_2(n)`.
+
+In other words, we don't consider every pair of points. Let's consider
+how phase II would improve:
+
+Number of cats|`(n(n-1)/2) * 1`|`n*log_2(n) * 1`|Improvement
+--------------|----------------|--------------|-----------
+100           |4950            |664.39        |7.45x
+1,000         |499,500         |9965.78       |50.12x
+10,000        |49,995,000      |132,877.12    |376.25x
+
+What we're seeing here is that since `n*log_2(n)` grows much more
+slowly, the gap between the old way and the new way is increasing. The
+new, faster way is a bigger and bigger improvement.
+
+By changing the time complexity, we're getting a bigger and bigger
+gain as the number of cats increases. This is better than a 10x, 100x,
+or even 1,000x improvement; we've totally changed the time complexity.
+The new algorithm will take closer and closer to 0% of the time of the
+old algorithm, so long as we keep increasing the cats we're comparing.
+
+[closest-pair]: http://en.wikipedia.org/wiki/Closest_pair_of_points_problem
 
 ## Resources
+
 [Big-O Cheat Sheet][bigo]
 [bigo]: http://bigocheatsheet.com/
-
-## Exercises
-* Write a method that finds the two smallest numbers in an array.
-* Write a method that finds all the subsets of an array.
-* Write a method that finds all the subsequences of an array.
-* Measure the time each of these methods takes given different inputs; Graph out how the time of each relates to the size of the input.
-* Make faster versions of each of these methods.

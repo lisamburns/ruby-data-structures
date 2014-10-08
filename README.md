@@ -3,8 +3,10 @@
 ## Lecture 1: Cat Match and Time Complexity
 
 * [Time Complexity][time-complexity]
+* [Interview Advice][interview-advice]
 
 [time-complexity]: ./lecture-01/time-complexity.md
+[interview-advice]: ./lecture-01/interview-advice.md
 
 ## Lecture 2: Big-Oh and Table of Time Complexities
 
