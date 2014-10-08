@@ -1,57 +1,98 @@
-# Algorithms
+# Topics
 
-## Lecture I
+## Lec 1
 
-* [Abstract Data Types][adt]
-* [Dynamic Array][dynamic-array]
-* [Example Code][dynarray-example]
+* Time Complexity
+* CatMatch
+* Table of Time Complexities
 
-[adt]: ./lec1/abstract-data-types.md
-[dynamic-array]: ./lec1/dynamic-array.md
-[dynarray-example]: ./code/lec1
+## Lec 2-3
 
-## Lecture II
+* Dynamic Array
+* Memory, pointer arithmetic
+* Amortized Time Complexity of DynArray push
 
-* [Linked List][linked-list]
-* [Example Code][linked-list-example]
+## Lec 3-4
 
-[linked-list]: ./lec2/linked-list.md
-[linked-list-example]: ./code/lec2
+* Hash Set
+    * ArrayIntSet (`O(MAX_VAL)` memory)
+    * IntHashSet (only ints)
+    * How to hash keys
+    * Hashing Passwords: Salting, Blowfish
+* HashMap
 
-## Lecture III
+## Lec 5
 
-* [Time Complexity][time-complexity]
+* LinkedList
+    * Not required for efficient `select`. `select!`.
+    * Not required for dequeue (can use a ring buffer)
+* Ex: LRUCache
 
-[time-complexity]: ./lec3/time-complexity.md
+## Lec 6
 
-## Lecture IV
+* Heaps and packed representation
+    * Priority queue.
+* Uses: work-queue, max k items, Dijkstra's Algorithm.
 
-* [Hash Set][hash-set]
-* [Example Code][hash-set-example]
+## Lec7-8
 
-[hash-set]: ./lec4/hash-set.md
-[hash-set-example]: ./code/lec4
+* Sorting
+    * MergeSort
+    * QuickSort
+    * HeapSort
+* RAM Caching
+* CPU Architecture
 
-## Lecture V
+## Lec 9-Lec 10
 
-* [Tree Set][tree-set]
-* Trie
-* Heap
-* [Example Code][heap-example]
+* BSTs; self-balancing tree
+    * Balancing can't go wrong.
+    * No O(n) worst case
+    * In-order traversal
+* Traversal algorithms.
+    * Database index
+    * Optimizes where using comparison, and order by.
+    * What is the time complexity of pkey lookup? Seems like
+      sort-merge join is O(nlog n) if it's O(log n) to look up an
+      record by pkey. Same would apply for hash join??
+    * Maybe duplicates of all columns are stored in the index?? Isn't
+      that super wasteful?
+    * Btree is more memory friendly than hashes, BTW.
 
-[tree-set]: ./lec5/tree-set.md
-[heap-example]: ./code/lec5
+## Lec 11-Lec 12
 
-## Lecture VI
+* Graphs
+    * Different versions of time complexity
+    * Topological Sort
+    * BFS shortest paths
+    * Dijkstra's
+    * Prim's Algorithm
 
-* [Day of the Sorts][day-sorts]
-* Binary Search
-* Linear search
-* Toplogical Sort
-* LRU Cache
+## And Beyond!
 
-[day-sorts]: ./lec6/sorting.md
+* B-Trees
+* Database Scalability, Transaction Processing
+    * Locking, anomolies
+    * MVCC, write skew
+* Concurrency: threads and events
+    * MapReduce
 
-## Lecture VII
+## Coursera Algorithms I
 
-* [Graphs](./lec7/graph.md)
+* Strassen's matrix mult.
+* Closest pairs. <<<
+* Counting inversions.
+* Bloom filters
+* Min cut?
+* Strongly connected components.
+
+## Coursera Algorithms II
+
+* Scheduling
+* Clustering
+* Union-find, Path Compression.
+* Bellman Ford
+* Floyd-Warshall, Johnson's Algorithm (all pairs shortest path!)
+* NP Complete, Knapsack, Vertex Cover, TSP
+* Approximation Algorithms.
+* Dynamic Programming.
