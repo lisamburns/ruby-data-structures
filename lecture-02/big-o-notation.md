@@ -1,37 +1,111 @@
-## Basic complexity classes
+# Big O Notation
 
-Most of the time, when you have twice as much work to do, it takes you
-twice as long to do the work. Take, for instance, adding up a list of
-numbers. Twice as many numbers means twice as many numbers to add; it
-should take twice as long to add them all. That seems fair; this is
-called a **linear** problem.
+In the CatMatch problem, we said that Phase II, which compared every
+pair of cat profiles and took `n*(n-1)/2 * 1` time **dominated** Phase
+I, which took `n * 1000` time. A function `f(n)` **dominates** another
+function `g(n)` if
 
-Some tasks get harder and harder. Imagine a set of 5 switches where
-only one combination of settings (on/off) will activate a
-circuit. There are `2**5` settings. Each time we add an additional
-switch, there are twice as many settings to check. This problem
-becomes harder and harder as we add additional switches. This is
-called an **exponential** problem; these are some of the worst kind of
-problems.
+    lim_{n -> ∞} g(n)/f(n) = 0
 
-Other problems have economies of scale where we can solve much bigger
-problems with just a little more work. Consider a problem where we
-would like to implement a spell-checker; we need to store a dictionary
-set, but we also need to balance the comprehensiveness of the
-dictionary with the time it will take to lookup a word.
+This means that as `n` gets larger and larger, `g(n)` is smaller and
+smaller compared to `f(n)`. This is exactly what happened with the
+time it takes to run Phase II and the time it takes to run Phase I.
 
-Let's use a tree set. If we want to limit ourselves to making 10
-comparisons, we can store a dictionary of `2**10 = 1024` words. At the
-cost of one additional comparison, we could double the size of the
-dictionary (1024 new words). And an additional comparison after that
-doubles the size again (another 2048 words). The cost of adding a new
-word to the dictionary is going down as the dictionary gets bigger.
+We define
+    `O(f) = { g | g does not dominate f}`.
 
-This is a very desirable kind of problem; it is called
-**logarithmic**.
+Note that `O(f)` is a **set of functions**. Here is a table of
+examples:
 
-These are our first three *complexity classes*: logarithmic, linear,
-and exponential. We'll see a few others soon.
+`f`|`g`|`f` dominates `g`?|`g` dominates `f`?|`f` in `O(g)`|`g` in `O(f)`
+-|----|-----|-----|----|----
+1|1   |false|false|true|true
+1|n   |false|true |true|false
+n|n   |false|false|true|true
+n|n**2|false|true |true|false
+
+To be hyper-accurate, we would say that the function `f(n) = n` is in
+the set `O(n**2)` (since `n**2` dominates `n`). Speaking less
+formally, we say that `f(n) = n` *is* `O(n**2)`.
+
+Note that `O(n**2)` includes functions that are dominated by `n**2`.
+If we want to talk about sets of functions, all of which do not
+dominate each other, there is a second set we use sometimes called
+`Θ(f)`.
+
+    Θ(f) = { g | g does not dominate f, and f does not dominate g }
+
+This is often called "big theta". Big theta is more specific than big
+O: when we say `g` is in `O(f)`, we are saying that `f` does not grow
+to dominate `f`. When we say `g` is in `Θ(f)`, we are saying that `f`
+does not grow to dominate `f`, AND `g` grows at fast enough to keep up
+with `f`.
+
+In general practice, most people just talk about big O and avoid
+misleading, silly statements like: "n is in O(n**3)". While accurate,
+this would tend to overstate the growth of `n`.
+
+Why not always use big theta? The reason is that it is often easy to
+compute conservative over-estimates of time complexity, which will
+give us an upper bound on how fast the function grows. It is often
+more difficult to compute lower-bound estimates to establish that an
+algorithm does not run *too* fast.
+
+Basically, the math is harder, so we don't do it.
+
+## Analyzing polynomials
+
+**TODO**
+
+## Two Big O Theorems
+
+```
+Say:
+f_1 is dominated by f_2,
+f_2 is dominated by f_3,
+THEN f_1 is dominated by f_3.
+
+Proof:
+
+We know that as n approaches infinity, f_2(n)/f_3(n) approaches zero.
+That means that there exists an N such that `f_3(n) > f_2(n)` for all
+`n > N`.
+
+Thus, for `n > N`, `f_1(n)/f_2(n)` > `f_1(n)/f_3(n)`. Since the first
+ratio approaches zero, the second must too.
+
+Therefore, f_3 dominates f_1.
+```
+
+We've seen that Phase I of CatMatch is `O(n)` while Phase II is
+`O(n**2)`. What is the time complexity of CatMatch overall?
+
+The time complexity of an algorithm is always the maximum of the time
+complexities of its components.
+
+```
+Say:
+
+f_1 in O(g_1),
+f_2 in O(g_2),
+AND g_2 dominates g_1.
+
+Then:
+
+lim_{n -> ∞} (f_1(n) + f_2(n)) / (g_2(n))
+    = (lim_{n -> ∞} f_1(n) / g_2(n)) + (lim_{n -> ∞} f_2(n) / g_2(n))
+
+We know that the first part is < ∞ because f_2 does not dominate g_2.
+
+We know the second part is < ∞ because f_1 is dominated by g_1, which
+is in turn dominated by g_2.
+
+Thus the sum of the limits is less than infinity. Thus f_1 + f_2 does
+not dominate g_2, which means the sum f_1 + f_2 is in O(g_2).
+```
+
+In simple terms: the time complexity of the worst bottleneck in your
+algorithm is the timecomplexity of the whole algorithm.
 
 ## Run-time
 
@@ -72,3 +146,7 @@ end
 This does two comparisons for each element in the array, for `2n`
 comparisons total. This is again linear in the number of elements, but
 we expect it to be about twice as slow.
+
+Remember: time complexity is about *dominance* and bottlenecks, not
+mere speed. `two_min` and `min` are equally bad as far as being a
+bottleneck.

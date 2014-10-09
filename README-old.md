@@ -18,12 +18,6 @@
 [linked-list]: ./lec2/linked-list.md
 [linked-list-example]: ./code/lec2
 
-## Lecture III
-
-* [Time Complexity][time-complexity]
-
-[time-complexity]: ./lec3/time-complexity.md
-
 ## Lecture IV
 
 * [Hash Set][hash-set]

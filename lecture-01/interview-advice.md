@@ -21,4 +21,4 @@
     * You can make marginal notes.
 * Always be talking
     * Talk through the problem as you do it. Engage the interviewer.
-*
+    * If you get stuck, describe what you're thinking.
