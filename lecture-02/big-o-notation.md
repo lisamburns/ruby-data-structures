@@ -53,10 +53,6 @@ algorithm does not run *too* fast.
 
 Basically, the math is harder, so we don't do it.
 
-## Analyzing polynomials
-
-**TODO**
-
 ## Two Big O Theorems
 
 ```
@@ -106,6 +102,31 @@ not dominate g_2, which means the sum f_1 + f_2 is in O(g_2).
 
 In simple terms: the time complexity of the worst bottleneck in your
 algorithm is the timecomplexity of the whole algorithm.
+
+## Analyzing polynomials
+
+When dealing with [polynomial functions][polynomial] of the form:
+
+    a_p x**p + a_p-1 x ** (p-1) + ... + a_1 x + a_0
+
+for instance,
+
+    n**3 + 2n**2 + 1
+
+then we can just **look at the highest power**. Consider:
+
+    does n**3 dominate 100n**2 + 10n + 900?
+
+We know that `n**3` crushes `n**2` because
+
+    lim n**2/n**3 = lim 1/n = 0
+
+`n**3` still crushes `100n**2`; the constant factor does not change
+the rate of growth of the quadratic term. The smaller terms of
+`100n**2 + 10n + 900` are negligable; if the biggest term is crushed,
+all the smaller ones will be too.
+
+[polynomial]: http://en.wikipedia.org/wiki/Polynomial
 
 ## Run-time
 
