@@ -16,13 +16,19 @@
 [big-o-notation]: ./lecture-02/big-o-notation.md
 [table-of-time-complexities]: ./lecture-02/table-of-time-complexities.md
 
-## Lecture 3-4: Pointers and Dynamic Arrays
+## Lecture 3: Pointers and Static Arrays
 
-* [Memory and Pointer Arithmetic][pointers]
+* [Memory and Pointers][pointers]
+* [Static Arrays][static-arrays]
+
+[pointers]: ./lecture-03/pointers.md
+[static-arrays]: ./lecture-03/static-arrays.md
+
+## Lecture 4: Dynamic Arrays
+
 * [Dynamic Array][dynamic-array]
 * Amortized Time Complexity of DynArray push
 
-[pointers]: ./lecture-03/pointers.md
 [dynmaic-array]: ./lecture-03/dynamic-array.md
 
 ## Lecture 4-5
