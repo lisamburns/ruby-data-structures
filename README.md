@@ -19,17 +19,16 @@
 ## Lecture 3: Pointers and Static Arrays
 
 * [Memory and Pointers][pointers]
-* [Static Arrays][static-arrays]
+* [Static Array][static-array]
 
 [pointers]: ./lecture-03/pointers.md
-[static-arrays]: ./lecture-03/static-arrays.md
+[static-array]: ./lecture-03/static-array.md
 
 ## Lecture 4: Dynamic Arrays
 
 * [Dynamic Array][dynamic-array]
-* Amortized Time Complexity of DynArray push
 
-[dynmaic-array]: ./lecture-03/dynamic-array.md
+[dynamic-array]: ./lecture-04/dynamic-array.md
 
 ## Lecture 4-5
 
