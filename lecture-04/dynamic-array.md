@@ -30,9 +30,9 @@
 
 operation|worst|amoritzed
 ---------|-----|---------
-[]|O(1)|O(1)
-[]=|O(1)|O(1)
-push|O(n)|O(1)
-pop|O(1)|O(1)
-shift|O(n)|O(n)
-unshift|O(n)|O(n)
+`[]`|O(1)|O(1)
+`[]=`|O(1)|O(1)
+`push`|O(n)|O(1)
+`pop`|O(1)|O(1)
+`shift`|O(n)|O(n)
+`unshift`|O(n)|O(n)
