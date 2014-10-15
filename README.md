@@ -30,7 +30,7 @@
 
 [dynamic-array]: ./lecture-04/dynamic-array.md
 
-## Lecture 4-5
+## Lecture 5: Hash Set
 
 * Hash Set
     * ArrayIntSet (`O(MAX_VAL)` memory)
@@ -94,6 +94,11 @@
     * MVCC, write skew
 * Concurrency: threads and events
     * MapReduce
+* TODO
+    * static typing vs dynamic typing
+    * interpretation
+    * garbage collection
+    * concurrency in Ruby
 
 ## Coursera Algorithms I
 
