@@ -28,6 +28,8 @@
 
 ## Time Complexity Chart
 
+Standard single-sided dynamic array:
+
 operation|worst|amoritzed
 ---------|-----|---------
 `[]`|O(1)|O(1)
@@ -36,3 +38,16 @@ operation|worst|amoritzed
 `pop`|O(1)|O(1)
 `shift`|O(n)|O(n)
 `unshift`|O(n)|O(n)
+
+Ring buffer:
+
+operation|worst|amoritzed
+---------|-----|---------
+`[]`|O(1)|O(1)
+`[]=`|O(1)|O(1)
+`push`|O(n)|O(1)
+`pop`|O(1)|O(1)
+`shift`|O(1)|O(1)
+`unshift`|O(n)|O(1)
+
+Ruby is in-between: it has a `O(1)` shift, but `O(n)` unshift.
