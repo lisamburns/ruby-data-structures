@@ -38,14 +38,18 @@
 
 * [HashSet][hash-set]
 
-[hash-set]: ./lecture-06/hash-set.md
+[hash-set]: ./lecture-05/hash-set.md
 
 ## w12d3: Hashing + LinkedList
 
-* LinkedList
+* [Hashing][hashing]
+* [LinkedList][linked-list]
     * Not required for efficient `select`. `select!`.
     * Not required for dequeue (can use a ring buffer)
 * Ex: LRUCache
+
+[hashing]: ./lecture-06/hashing.md
+[linked-list]: ./lecture-06/linked-list.md
 
 ## Lecture 7
 
