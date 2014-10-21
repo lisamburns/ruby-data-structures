@@ -1,15 +1,61 @@
 # Hash set
 
-A tree set is relatively fast; you need to examine `log(n)`
-elements. This grows very slowly as you add more elements. However, we
-can go even faster.
+## What is a Set?
 
-We talked about keeping elements in a dynamic array, but even if we
-kept the array in sorted order (which made insertions/removals
-costly), we had to jump around as much as if we jumped around a tree
-set.
+* `Set#insert(el)`
+* `Set#include?(el)`
+* `Set#delete(el)`
 
-## Storing numbers in a range
+## Two Sum Introduction
+
+```ruby
+def two_sum(numbers)
+  s = Set.new
+  numbers.each { |el| s.insert(el) }
+  numbers.any? { |el| s.include?(-1 * el) }
+end
+```
+
+We can write an `ArraySet` like so:
+
+```ruby
+class ArraySet
+  def initialize
+    @store = []
+  end
+
+  def include?(el)
+    @store.any? { |el2| el2 == el }
+  end
+
+  # insert typically returns whether the item was newly added or
+  # already added.
+  def insert(el)
+    return false if include?(el)
+    @store << el
+    true
+  end
+
+  # delete typically returns whether the item was there.
+  def delete(el)
+    @store.each_with_index do |el2, idx|
+      # emphasizing how `Array#delete` works.
+      if el2 == el
+        @store.delete_at(idx)
+        return true
+      end
+    end
+    false
+  end
+end
+```
+
+Each operation of `ArraySet` is `O(n)`; therefore if we use it in our
+`two_sum` solution, we have an `O(n**2)` algorithm.
+
+A `HashSet` will have `O(1)` operations.
+
+## `MaxIntSet`
 
 Let's talk about a special case where we can avoid jumping. Imagine we
 want to store a subset of the numbers `(0...4)`. Not all of them will
@@ -17,86 +63,190 @@ be in the set, but no numbers outside the range will appear. Then we
 can represent the set `{1, 3}` like so:
 
 ```
-# indices [  0,   1,   2,   3,   4]
-   set =  [nil,   1, nil,   3, nil]
+# indices [    0,    1,     2,    3,     4]
+   set =  [false, true, false, true, false]
 ```
 
-At each index, we store `nil` if the object isn't in the set;
-otherwise we store the item itself.
+At each index, we store `false` if the object isn't in the set;
+otherwise we store `true`.
 
-Because array indexing and assignment are fast, we can very quickly
-lookup whether a number is present (`not set[num].nil?`), add it
-(`set[num] = num`), or remove it (`set[num] = nil`).
+We can use this to write a new kind of set:
 
-Of course, this has the major limitation that we can only store
-numbers in a limited range. It may also use a lot of memory; if we
-wanted to store numbers in `(1..1_000_000)`, we'd have to use an array
-of a million nils, even if we only had a few elements in the set.
+```ruby
+class MaxIntSet
+  def initialize(max)
+    @store = Array.new(max, false)
+  end
 
-## Using less space
+  def include?(num)
+    @store[num]
+  end
 
-Let's fix the space problem first. The trick is to use a smaller
-array. Instead of placing `num` at position `num`, we place it at
-position `num % set.length`. This array represents `{11, 15 25}`:
+  def insert(num)
+    @store[num] = true
+  end
 
-```
-# indices = [ 0,   1,   2,  3,  4,        5,  6,  7,  8,  9]
-      set = [[], [11], [], [], [], [15, 25], [], [], [], []]
-```
-
-As we see from above, we need to allow the possibility that multiple
-items are placed in the same spot. We implement the set methods like
-so:
-
-```
-contains?: set[num % set.length].include?(num)
-      add: set[num % set.length] << num if set.contains?(num)
-   remove: set[num % set.length].delete(num)
+  def delete(num)
+    @store[num] = false
+  end
+end
 ```
 
-## Bucket size, speed, resizing
+All operations are `O(1)` here. However, we've added two very serious
+restrictions:
 
-The inner arrays in the store are called *buckets*. If all of the
-buckets contain at most one element, this new version is basically as
-fast as our original, space hungry version.
+* We can only store numbers.
+* The range of numbers is limited.
 
-Things slow down as the buckets fill up. Let's say we put `1_000_000`
-elements into our set. Each bucket would have about `100_000` elements
-in each bucket. Doing an `include?` on an array of 100k elements
-involves looking at them all; that's way worse than a tree set
-`log_2(100_000) == 16.61`.
+Another problem: the memory usage does not depend on the number of
+items stored in the set, but instead on the range of the values. So you
+would use lots of memory if the range was huge, even if the number of
+elements were small.
 
-The trick is to every once in a while resize the hash map to grow the
-number of buckets as we add more items. We refer to `num_elements /
-store_size` as the *load factor*; a typical load factor limit is
-90%. Most of the buckets should have one or two items.
+## `IntSet`
 
-Whenever we add an item that would push us past the load factor limit,
-we allocate a new store with twice as many buckets, then go through
-all the items in the old store and place them in their new
-location. Note that some of the previous *colliding pairs* (different
-numbers that were placed in the same bucket) may be broken up into
-different buckets.
+Let's remove the range limitation:
 
-This keeps buckets small and fast to search through, but it also
-doesn't use too much space. Because we only resize (double in size)
-when load hits 90%, the load is never less than `.90 * .50 == .45`.
+```ruby
+class IntSet
+  def initialize
+    @buckets = Array.new(8) { [] }
+  end
 
-## Storing arbitrary objects
+  def include?(num)
+    bucket = @buckets[num % @buckets.length]
+    bucket.include?(num)
+  end
 
-This worked for numbers, but what about other objects (e.g., strings)?
-We used the number-item itself to compute the bucket number; we need a
-new way to comute a bucket number.
+  def insert(num)
+    return false if include?(num)
+    bucket = @buckets[num % @buckets.length]
+    bucket << num
+    true
+  end
 
-To do this, we use a *hash function*. A hash function takes an object
-and produces a random-looking, scrambled number from it. Essentially,
-the computed hash value is stable; it is not actually random, so
-`obj.hash` won't ever change (for the same object). Because the hash
-value is stable, we can use it as a bucket id.
+  def delete(num)
+    return false unless include?(num)
+    bucket = @buckets[num % @buckets.length]
+    bucket.delete(num)
+    true
+  end
+end
+```
 
-##  Exercises
-Estimated time: 30min
+Here, we are creating 8 **buckets**. Buckets store numbers in the set.
+A number is assigned to the bucket by taking the value modulo 8. This
+relatively evenly distributes the numbers across the buckets.
 
-* Implement a `HashSet`.
-* Build your `HashSet` into a `HashMap`.
-* Take your `TreeSet` implementation and build that into a `TreeMap`.
+The operations here are `O(n)` again; even though we're breaking up
+the elements of the set across many buckets, each bucket still
+contains on average `n/8` elements. As `n` increases, the size of the
+buckets increases linearly. And the `bucket.include?(num)` and
+`bucket.delete(num)` operations will thus take time linear to the
+number of overall elements.
+
+The news isn't all bad: we did eliminate our space problem: memory
+usage is back to `O(n)`.
+
+## Resizing the number of buckets
+
+Our problem is that the size of the buckets increases as the number of
+overall elements increases. If instead the size of the buckets
+remained constant even as the number of elements increased, then the
+set operations would not slow down.
+
+How is that possible? The solution is to increase the number of
+buckets as we increase the number of elements. We want:
+
+    number of elements / number of buckets < 1.0
+
+at all times.
+
+```ruby
+class ResizingIntSet
+  def initialize
+    @buckets = Array.new(8) { [] }
+    # New ivar!
+    @num_elements = 0
+  end
+
+  def include?(num)
+    bucket = @buckets[num % @buckets.length]
+    bucket.include?(num)
+  end
+
+  def insert(num)
+    return false if include?(num)
+    bucket = @buckets[num % @buckets.length]
+    bucket << num
+
+    # maybe resize!
+    @num_elements += 1
+    resize! if @num_elements == @buckets.length
+    true
+  end
+
+  def delete(num)
+    return false unless include?(num)
+    bucket = @buckets[num % @buckets.length]
+    bucket.delete(num)
+    @num_elements -= 1
+    true
+  end
+
+  protected
+  def resize!
+    old_buckets = @buckets
+    @buckets = Array.new(@buckets.length * 2) { [] }
+    @num_elements = 0
+    old_buckets.each do |bucket|
+      bucket.each { |el| insert(el) }
+    end
+  end
+end
+```
+
+Here we keep track of the `@num_elements` at all times. When this
+grows so that `@num_elements == @buckets.length`, we run the `resize!`
+method. This creates a new buckets array of twice as many buckets, and
+then re-inserts everything into this new buckets array.
+
+Re-adding items to the new buckets is called **rehashing**. Note that
+the number `9` lives in bucket 1 when there are 8 buckets, but now
+lives in bucket 9 when there are 16 buckets after a resize.
+
+## Time Complexity Analysis
+
+`resize!` is `O(n)` time, because this is how many items it needs to
+re-insert. Note that it **is not** `O(n**2)` time even though there
+are doubly-nested loops. This is a classic mistake students often make.
+
+### `include?`
+
+The `include?` method is `O(1)` **average time**. No matter how many
+elements are added to the `ResizingIntSet`, the average bucket
+contains less than one element. Some buckets may be large if there are
+a lot of **collisions**; the worst case time complexity is `O(n)`. But
+for some bucket to be larger, another needs to be smaller, so if you
+call `insert?` for `k` different values, over time you expect the
+running time to be `O(k)`, regardless of the number of elements in the
+set.
+
+Also: the worst-case becomes less and less likely as you add more and
+more elements to the set. If you have 10 elements, it's possible that
+8 end up in the same bucket. If you have 10k elements, it's
+extraordinarily unlikely that 8k elements are mapped to the same
+bucket.
+
+### `insert`
+
+The `insert` method uses `include?`, which we just said was `O(1)`
+expected time. It also occasionally calls `resize!`.
+
+It is true that `resize!` runs in `O(n)` time. But we call it less and
+less frequently, because we keep doubling the number of buckets. The
+same amortization argument we used for the dynamic array applies.
+
+### `delete`
+
+The analysis for `include?` applies again.

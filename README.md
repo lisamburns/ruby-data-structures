@@ -1,6 +1,6 @@
 # Topics
 
-## Lecture 1: Cat Match and Time Complexity
+## w10d3: Cat Match and Time Complexity
 
 * [Time Complexity][time-complexity]
 * [Interview Advice][interview-advice]
@@ -8,7 +8,7 @@
 [time-complexity]: ./lecture-01/time-complexity.md
 [interview-advice]: ./lecture-01/interview-advice.md
 
-## Lecture 2: Big-Oh and Table of Time Complexities
+## w10d5: Big-Oh and Table of Time Complexities
 
 * [Big O Notation][big-o-notation]
 * [Table of Time Complexities][table-of-time-complexities]
@@ -16,7 +16,7 @@
 [big-o-notation]: ./lecture-02/big-o-notation.md
 [table-of-time-complexities]: ./lecture-02/table-of-time-complexities.md
 
-## Lecture 3: Pointers and Static Arrays
+## w11d1: Pointers and Static Arrays
 
 * [Memory and Pointers][pointers]
 * [Static Array][static-array]
@@ -24,22 +24,23 @@
 [pointers]: ./lecture-03/pointers.md
 [static-array]: ./lecture-03/static-array.md
 
-## Lecture 4: Dynamic Arrays
+## w11d3: Dynamic Arrays
 
 * [Dynamic Array][dynamic-array]
 
 [dynamic-array]: ./lecture-04/dynamic-array.md
 
-## Lecture 5: Hash Set
+## w11d5
 
-* Hash Set
-    * ArrayIntSet (`O(MAX_VAL)` memory)
-    * IntHashSet (only ints)
-    * How to hash keys
-    * Hashing Passwords: Salting, Blowfish
-* HashMap
+* Dynamic Array continued
 
-## Lecture 6
+## w12d1: Hash Set
+
+* [HashSet][hash-set]
+
+[hash-set]: ./lecture-06/hash-set.md
+
+## w12d3: Hashing + LinkedList
 
 * LinkedList
     * Not required for efficient `select`. `select!`.
