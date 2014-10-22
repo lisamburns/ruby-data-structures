@@ -18,7 +18,7 @@ when load hits 90%, the load is never less than `.90 * .50 == .45`.
 
 This worked for numbers, but what about other objects (e.g., strings)?
 We used the number-item itself to compute the bucket number; we need a
-new way to comute a bucket number.
+new way to compute a bucket number.
 
 To do this, we use a *hash function*. A hash function takes an object
 and produces a random-looking, scrambled number from it. Essentially,
