@@ -11,10 +11,11 @@ psychologist will talk with each cat, giving them scores on a variety
 of measures. The psychologist files a report on each cat, producing a
 table like:
 
-name|jumping|meowing|napping
-markov|0.5|0.75|0.1
-curie|0.9|0.6|0.8
-breakfast|0.2|0.3|0.6
+name     |jumping|meowing|napping
+---------|-------|-------|------
+markov   |0.5    |0.75   |0.1
+curie    |0.9    |0.6    |0.8
+breakfast|0.2    |0.3    |0.6
 
 The idea is that each row describes a cat's personality. In
 pseudo-code, we could write something like:
