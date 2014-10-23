@@ -98,6 +98,10 @@
 
 ## And Beyond!
 
+* Old:
+    * Binary Search
+    * Linear Search
+* Trie
 * B-Trees
 * Database Scalability, Transaction Processing
     * Locking, anomolies
