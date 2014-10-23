@@ -50,8 +50,6 @@
 ## w12d5: LinkedList/LRUCache
 
 * [LinkedList][linked-list]
-    * Not required for efficient `select`. `select!`.
-    * Not required for dequeue (can use a ring buffer)
 * Ex: LRUCache
 
 [linked-list]: ./lecture-07/linked-list.md
