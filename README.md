@@ -43,13 +43,18 @@
 ## w12d3: Hashing + LinkedList
 
 * [Hashing][hashing]
+* HashSet => HashMap
+
+[hashing]: ./lecture-06/hashing.md
+
+## w12d5: LinkedList/LRUCache
+
 * [LinkedList][linked-list]
     * Not required for efficient `select`. `select!`.
     * Not required for dequeue (can use a ring buffer)
 * Ex: LRUCache
 
-[hashing]: ./lecture-06/hashing.md
-[linked-list]: ./lecture-06/linked-list.md
+[linked-list]: ./lecture-07/linked-list.md
 
 ## Lecture 7
 
