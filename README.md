@@ -121,6 +121,7 @@
 * Bloom Filters
 * Finding connected components
 * P vs NP, NP-completeness
+* Backtracking search.
 
 **Languages**
 
