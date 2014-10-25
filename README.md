@@ -47,29 +47,41 @@
 
 [hashing]: ./lecture-06/hashing.md
 
-## w12d5: LinkedList/LRUCache
+## w12d5: LinkedList
 
 * [LinkedList][linked-list]
-* Ex: LRUCache
 
 [linked-list]: ./lecture-07/linked-list.md
 
-## Lecture 7
+## w13d1: LRUCache
 
-* Heaps and packed representation
-    * Priority queue.
-* Uses: work-queue, max k items, Dijkstra's Algorithm.
+* Ex: LRUCache
 
-## Lecture 8-9
+## w13d3: Heaps
 
-* Sorting
-    * MergeSort
-    * QuickSort
-    * HeapSort
+* Priority Queue
+* TreeHeap
+* ArrayHeap
+* Uses:
+    * work-queue
+    * max k items
+    * Dijkstra's algorithm (later)
+
+## w13d5: Heaps Continued
+
+## w14d1: Sorting
+
+* MergeSort
+* QuickSort
+* HeapSort
+
+## w14d3: Sorting II
+
+* Sorting performance
 * RAM Caching
 * CPU Architecture
 
-## Lecture 9-10
+## w14d5: Binary Search Tree
 
 * BSTs; self-balancing tree
     * Balancing can't go wrong.
@@ -85,7 +97,7 @@
       that super wasteful?
     * Btree is more memory friendly than hashes, BTW.
 
-## Lecture 11-12
+## w15d1+: Graphs
 
 * Graphs
     * Different versions of time complexity
@@ -93,41 +105,32 @@
     * BFS shortest paths
     * Dijkstra's
     * Prim's Algorithm
+    * Floyd-Warshall Algorithm
 
-## And Beyond!
+## Bonus Topics
 
-* Old:
-    * Binary Search
-    * Linear Search
+**Algorithms**
+
+* Dynamic Programming
+* Binary Search, Linear Search
+* Closest-Pairs
 * Trie
 * B-Trees
-* Database Scalability, Transaction Processing
-    * Locking, anomolies
-    * MVCC, write skew
+* Bloom Filters
+* Finding connected components
+* P vs NP, NP-completeness
+
+**Languages**
+
+* Static Typing vs Dynamic Typing
+* Interpretation vs Compilation
+* Garbage Collection
+* Concurrency in Ruby
+
+**Databases**
+
+* Scaling Databases
+* ACID: 2PL vs MVCC
+
 * Concurrency: threads and events
     * MapReduce
-* TODO
-    * static typing vs dynamic typing
-    * interpretation
-    * garbage collection
-    * concurrency in Ruby
-
-## Coursera Algorithms I
-
-* Strassen's matrix mult.
-* Closest pairs. <<<
-* Counting inversions.
-* Bloom filters
-* Min cut?
-* Strongly connected components.
-
-## Coursera Algorithms II
-
-* Scheduling
-* Clustering
-* Union-find, Path Compression.
-* Bellman Ford
-* Floyd-Warshall, Johnson's Algorithm (all pairs shortest path!)
-* NP Complete, Knapsack, Vertex Cover, TSP
-* Approximation Algorithms.
-* Dynamic Programming.
