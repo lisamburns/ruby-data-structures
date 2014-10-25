@@ -111,6 +111,8 @@
 
 **Algorithms**
 
+* Bidirectional path-finding
+* A\*
 * Dynamic Programming
 * Binary Search, Linear Search
 * Closest-Pairs
