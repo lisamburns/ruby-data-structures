@@ -65,7 +65,7 @@
 
 [lru-cache-2]: ./w13d3/lru-cache-2.md
 
-## w13d3: Heaps
+## w13d5: Heaps
 
 * Priority Queue
 * TreeHeap
@@ -75,21 +75,21 @@
     * max k items
     * Dijkstra's algorithm (later)
 
-## w13d5: Heaps Continued
+## w14d1: Heaps Continued
 
-## w14d1: Sorting
+## w14d3: Sorting
 
 * MergeSort
 * QuickSort
 * HeapSort
 
-## w14d3: Sorting II
+## w14d5: Sorting II
 
 * Sorting performance
 * RAM Caching
 * CPU Architecture
 
-## w14d5: Binary Search Tree
+## w15d1: Binary Search Tree
 
 * BSTs; self-balancing tree
     * Balancing can't go wrong.
@@ -105,7 +105,9 @@
       that super wasteful?
     * Btree is more memory friendly than hashes, BTW.
 
-## w15d1+: Graphs
+## w15d3: BST II
+
+## w15d5+: Graphs
 
 * Graphs
     * Different versions of time complexity
@@ -119,17 +121,22 @@
 
 **Algorithms**
 
-* Bidirectional path-finding
-* A\*
-* Dynamic Programming
-* Binary Search, Linear Search
-* Closest-Pairs
-* Trie
-* B-Trees
-* Bloom Filters
-* Finding connected components
-* P vs NP, NP-completeness
-* Backtracking search.
+* Graph Searching
+    * [Bidirectional search](http://en.wikipedia.org/wiki/Bidirectional_search)
+    * [A\* search](http://en.wikipedia.org/wiki/A*_search_algorithm)
+* Searching in Arrays
+    * [Binary Search](http://en.wikipedia.org/wiki/Binary_search_algorithm)
+    * [Linear Search](http://en.wikipedia.org/wiki/Linear_search)
+* [Closest Pairs of Points](http://en.wikipedia.org/wiki/Closest_pair_of_points_problem)
+* Trees
+    * [Trie](http://en.wikipedia.org/wiki/Trie)
+    * [B-Trees](http://en.wikipedia.org/wiki/B-tree)
+* [Bloom Filters](http://en.wikipedia.org/wiki/Bloom_filter)
+* [Backtracking search](http://en.wikipedia.org/wiki/Backtracking)
+* [Computational Complexity Theory](http://en.wikipedia.org/wiki/Computational_complexity_theory)
+    * [NP-completeness](http://en.wikipedia.org/wiki/NP-complete)
+    * [P vs NP](http://en.wikipedia.org/wiki/P_versus_NP_problem)
+* [Dynamic Programming](http://en.wikipedia.org/wiki/Dynamic_programming)
 
 **Languages**
 
