@@ -5,30 +5,30 @@
 * [Time Complexity][time-complexity]
 * [Interview Advice][interview-advice]
 
-[time-complexity]: ./lecture-01/time-complexity.md
-[interview-advice]: ./lecture-01/interview-advice.md
+[time-complexity]: ./w10d3/time-complexity.md
+[interview-advice]: ./w10d3/interview-advice.md
 
 ## w10d5: Big-Oh and Table of Time Complexities
 
 * [Big O Notation][big-o-notation]
 * [Table of Time Complexities][table-of-time-complexities]
 
-[big-o-notation]: ./lecture-02/big-o-notation.md
-[table-of-time-complexities]: ./lecture-02/table-of-time-complexities.md
+[big-o-notation]: ./w10d5/big-o-notation.md
+[table-of-time-complexities]: ./w10d5/table-of-time-complexities.md
 
 ## w11d1: Pointers and Static Arrays
 
 * [Memory and Pointers][pointers]
 * [Static Array][static-array]
 
-[pointers]: ./lecture-03/pointers.md
-[static-array]: ./lecture-03/static-array.md
+[pointers]: ./w11d1/pointers.md
+[static-array]: ./w11d1/static-array.md
 
 ## w11d3: Dynamic Arrays
 
 * [Dynamic Array][dynamic-array]
 
-[dynamic-array]: ./lecture-04/dynamic-array.md
+[dynamic-array]: ./w11d3/dynamic-array.md
 
 ## w11d5
 
@@ -38,32 +38,32 @@
 
 * [HashSet][hash-set]
 
-[hash-set]: ./lecture-05/hash-set.md
+[hash-set]: ./w12d1/hash-set.md
 
 ## w12d3: Hashing + LinkedList
 
 * [Hashing][hashing]
 * HashSet => HashMap
 
-[hashing]: ./lecture-06/hashing.md
+[hashing]: ./w12d3/hashing.md
 
 ## w12d5: LinkedList
 
 * [LinkedList][linked-list]
 
-[linked-list]: ./lecture-07/linked-list.md
+[linked-list]: ./w12d5/linked-list.md
 
 ## w13d1: LRUCache
 
 * [LRUCache I][lru-cache-1]
 
-[lru-cache-1]: ./lecture-08/lru-cache-1.md
+[lru-cache-1]: ./w13d1/lru-cache-1.md
 
 ## w13d3: LRUCache with Linked List
 
 * [LRUCache II][lru-cache-2]
 
-[lru-cache-2]: ./lecture-09/lru-cache-2.md
+[lru-cache-2]: ./w13d3/lru-cache-2.md
 
 ## w13d3: Heaps
 
