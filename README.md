@@ -55,7 +55,15 @@
 
 ## w13d1: LRUCache
 
-* Ex: LRUCache
+* [LRUCache I][lru-cache-1]
+
+[lru-cache-1]: ./lecture-08/lru-cache-1.md
+
+## w13d3: LRUCache with Linked List
+
+* [LRUCache II][lru-cache-2]
+
+[lru-cache-2]: ./lecture-09/lru-cache-2.md
 
 ## w13d3: Heaps
 
