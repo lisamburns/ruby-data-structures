@@ -1,3 +1,4 @@
+# This is a basic link class.
 class Link
   attr_accessor :value
   attr_reader :next, :prev
@@ -6,36 +7,36 @@ class Link
     @value = value
   end
 
-  # Add ourself before the link
-  def insert_before(link)
-    if self.next || self.prev
+  # Add the link before us
+  def insert_left(link)
+    if link.next || link.prev
       raise "trying to insert a link that's not bare!"
     end
 
-    self.prev = link.prev
-    self.next = link
-    link.prev = self
+    link.next = self
+    link.prev = self.prev
+    self.prev.next = link if self.prev
+    self.prev = link
+
+    nil
   end
 
-  # Add ourself after the link
-  def insert_after(link)
-    if self.next || self.prev
+  # Add the link after us
+  def insert_right(link)
+    if link.next || link.prev
       raise "trying to insert a link that's not bare!"
     end
 
-    self.prev = link
-    self.next = link.next
-    link.next = self
+    link.prev = self
+    link.next = self.next
+    self.next.prev = link if self.next
+    self.next = link
+
+    nil
   end
 
   def remove
-    if self.prev
-      self.prev.next = self.next
-    end
-    if self.next
-      self.next.prev = self.prev
-    end
-
+    self.prev.next, self.next.prev = self.next, self.prev
     self.prev, self.next = nil, nil
   end
 
@@ -43,90 +44,132 @@ class Link
   attr_writer :next, :prev
 end
 
-class LinkedListLink < Link
-  attr_reader :list
-
-  def initialize(list, value)
-    super(value)
-    @list = list
+# A SentinelLink class helps us manage a list. A linked list will
+# always include at least two links: the first and last
+# sentinels. They're dummy objects.
+class SentinelLink < Link
+  def initialize(side)
+    raise "incorrect side choice" unless [:first, :last].include?(side)
+    @side = side
   end
 
-  def insert_after(link)
-    list.send(:tail=, self) if link == list.tail
-    super
+  def prev=(link)
+    if @side == :last
+      return super(link)
+    elsif link.nil?
+      # always keep the prev of the first sentinel nil
+    else
+      raise "can't set prev of left sentinel"
+    end
   end
 
-  def insert_before(link)
-    list.send(:head=, self) if link == list.head
-    super
+  def next=(link)
+    if @side == :first
+      return super(link)
+    elsif link.nil?
+      # always keep the next of the last sentinel nil
+    else
+      raise "can't set prev of left sentinel"
+    end
+  end
+
+  def value
+    raise "Sentinels don't have values!"
+  end
+
+  def value=(link)
+    raise "Sentinels don't have values!"
   end
 
   def remove
-    list.send(:head=, self.next) if self == list.head
-    list.send(:tail=, self.prev) if self == list.tail
-    super
+    raise "Can't remove a sentinel!"
   end
 end
 
 class LinkedList
-  attr_reader :head, :tail
+  attr_reader :first, :last
 
   def initialize
-    @head, @tail = nil, nil
+    @first = SentinelLink.new(:first)
+    @last = SentinelLink.new(:last)
+
+    @first.insert_right(@last)
   end
 
   # O(n): don't use me!
   def [](idx)
     raise "index out of bounds" if idx < 0
 
-    link = self.front
+    link = first.next
     idx.times do
-      raise "index out of bounds" if link.nil?
+      # We overran the list if we ever hit the sentinel.
+      raise "index out of bounds" if link == last
       link = link.next
     end
 
-    link
+    link.value
   end
 
   def empty?
-    head.nil?
-  end
-
-  def new_link(value)
-    LinkedListLink.new(self, value)
+    # Nothing between the sentinels
+    first.next == last
   end
 
   def pop
-    popped_link = @tail
-    popped_link.remove
-    popped_link
+    pop_link.value
   end
 
-  def push(link)
-    if empty?
-      @head = @tail = link
-    else
-      link.insert_after(tail)
-    end
+  def pop_link
+    raise "can't pop from empty list!" if empty?
+
+    link = last.prev
+    link.remove
+    link
+  end
+
+  def push(value)
+    push_link(Link.new(value))
+  end
+
+  def push_link(link)
+    last.insert_left(link)
+    link
   end
 
   def shift
-    shifted_link = @head
-    shifted_link.remove
-    shifted_link
+    shift_link.value
   end
 
-  def unshift(link)
-    if empty?
-      @head = @tail = link
-    else
-      link.insert_before(@head)
-    end
+  def shift_link
+    raise "can't pop from empty list!" if empty?
+
+    link = first.next
+    link.remove
+    link
   end
 
-  protected
-  attr_writer :head, :tail
+  def unshift(value)
+    unshift_link(Link.new(value))
+  end
+
+  def unshift_link(link)
+    first.insert_right(link)
+    link
+  end
 end
+
+FIBS = [0, 1, 1, 2, 3, 5]
+ll = LinkedList.new
+FIBS.each { |num| ll.push(num) }
+arr = []
+6.times { arr << ll.shift }
+raise "hell" unless arr == FIBS
+
+ll = LinkedList.new
+FIBS.each { |num| ll.unshift(num) }
+arr = []
+6.times { arr << ll.pop }
+raise "hell" unless arr == FIBS
 
 class LRUCache
   def initialize(max_size, &prc)
@@ -134,22 +177,47 @@ class LRUCache
       {}, LinkedList.new, max_size, prc
   end
 
-  def get(key)
+  def [](key)
     if @links_hash.has_key?(key)
       link = @links_hash[key]
       link.remove
-      @linked_list.unshift(link)
+      @linked_list.push_link(link)
       return link.value
     end
 
+    p "NOT CACHED"
+
     if @links_hash.count == @max_size
-      @linked_list.pop
+      @linked_list.shift
     end
 
     value = @prc.call(key)
-    link = @linked_list.new_link(value)
-    @linked_list.unshift(link)
+    @links_hash[key] = @linked_list.unshift(value)
 
     value
   end
 end
+
+def fib1(n)
+  return 0 if n == 0
+  return 1 if n == 1
+  return fib1(n - 2) + fib1(n - 1)
+end
+
+p "Start of fib1: #{Time.now}"
+p fib1(36)
+p "End of fib1: #{Time.now}"
+
+@cache = LRUCache.new(10) do |n|
+  next 0 if n == 0
+  next 1 if n == 1
+  next @cache[n - 2] + @cache[n - 1]
+end
+
+def fib2(n)
+  @cache[n]
+end
+
+p "Start of fib2: #{Time.now}"
+p fib2(36)
+p "End of fib2: #{Time.now}"
