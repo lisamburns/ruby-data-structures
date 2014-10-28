@@ -8,6 +8,8 @@ class BinaryMinHeap
   end
 
   def extract
+    raise "no element to extract" if count == 0
+
     val = @store[0]
 
     if count > 1
@@ -19,6 +21,11 @@ class BinaryMinHeap
     end
 
     val
+  end
+
+  def peek
+    raise "no element to peek" if count == 0
+    @store[0]
   end
 
   def push(val)
@@ -61,6 +68,7 @@ class BinaryMinHeap
     # of rounding, when child_index is even: `(child_index - 2) / 2 ==
     # (child_index - 1) / 2`.
 
+    raise "root has no parent" if child_index == 0
     (child_index - 1) / 2
   end
 
@@ -81,11 +89,12 @@ class BinaryMinHeap
       # Leaf or both children_vals <= parent_val
       return
     else
+      # Choose smaller of two children.
       swap_idx = (r_child_val.nil? || l_child_val <= r_child_val) ?
         l_child_idx : r_child_idx
 
-      @store[parent_idx] = @store[swap_idx]
-      @store[swap_idx] = parent_val
+      @store[parent_idx], @store[swap_idx] =
+        @store[swap_idx], parent_val
       heapify_down(swap_idx)
     end
   end
@@ -99,9 +108,19 @@ class BinaryMinHeap
       # Heap property valid!
       return
     else
-      @store[child_idx] = parent_val
-      @store[parent_idx] = child_val
+      @store[child_idx], @store[parent_idx] = parent_val, child_val
       heapify_up(parent_idx)
     end
   end
 end
+
+bheap = BinaryMinHeap.new
+bheap.push(5)
+fail unless bheap.peek == 5
+bheap.push(3)
+fail unless bheap.peek == 3
+bheap.push(8)
+fail unless bheap.peek == 3
+arr = []
+3.times { arr << bheap.extract}
+fail unless arr == [3, 5, 8]
