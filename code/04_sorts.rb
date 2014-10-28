@@ -1,4 +1,4 @@
-require_relative '04_heap'
+require_relative '03_heap'
 
 class Array
   # Uses O(n) memory. Always takes O(nlogn) time.
@@ -21,9 +21,11 @@ class Array
     left_idx, right_idx = 0, 0
     until (left_idx == left.length) && (right_idx == right.length)
       if (left_idx == left.length)
+        # used everything on the left; only stuff on the right remains
         merged << right[right_idx]
         right_idx += 1
       elsif right_idx == right.length
+        # used everything on the right; only stuff on the left remains
         merged << left[left_idx]
         left_idx += 1
       elsif left[left_idx] <= right[right_idx]
@@ -38,6 +40,8 @@ class Array
     merged
   end
 end
+
+fail unless [5, 3, 4, 2, 1, 6].merge_sort == [1, 2, 3, 4, 5, 6]
 
 class Array
   # Quick sort has average case time complexity O(nlogn), but worst
@@ -56,20 +60,25 @@ class Array
     (left.quick_sort1) + middle + (right.quick_sort1)
   end
 
-  # In-place. Uses O(log(n)) for recursion.
+  # In-place. Uses O(log(n)) space for recursion.
   def quick_sort2!(left = 0, right = self.length)
     return self if left == right
 
     pivot_idx, pivot = left, self[left]
     ((left + 1)...right).each do |idx|
-      val = self[pivot]
+      val = self[idx]
       if (val >= pivot)
         # bigger than pivot, leave where it is.
       else
         # Three-way shuffle: pivot_idx + 1 => idx, pivot_idx =>
         # pivot_idx + 1, idx => pivot_idx.
+
+        # move self[pivot_idx + 1] to idx, which keeps this bigger item
+        # to the right of the pivot.
         self[idx] = self[pivot_idx + 1]
+        # move the pivot forward one, to where the larger item used to live.
         self[pivot_idx + 1] = pivot
+        # move the smaller item to one to the left of the pivot.
         self[pivot_idx] = val
 
         pivot_idx += 1
@@ -82,6 +91,9 @@ class Array
     self
   end
 end
+
+fail unless [5, 3, 4, 2, 1, 6].quick_sort1 == [1, 2, 3, 4, 5, 6]
+fail unless [5, 3, 4, 2, 1, 6].quick_sort2! == [1, 2, 3, 4, 5, 6]
 
 class HeapSorter < BinaryMinHeap
   attr_reader :count
