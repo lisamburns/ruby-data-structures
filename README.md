@@ -1,5 +1,7 @@
 # Topics
 
+**[Code Demos](./code)**
+
 ## w10d3: Cat Match and Time Complexity
 
 * [Time Complexity][time-complexity]
