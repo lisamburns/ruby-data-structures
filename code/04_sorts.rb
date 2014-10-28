@@ -95,6 +95,11 @@ end
 fail unless [5, 3, 4, 2, 1, 6].quick_sort1 == [1, 2, 3, 4, 5, 6]
 fail unless [5, 3, 4, 2, 1, 6].quick_sort2! == [1, 2, 3, 4, 5, 6]
 
+# This inherits from BinaryMinHeap so we can reuse the `heapify_up` and
+# `heapify_down` operations. Our subclass will avoid resizing the
+# array, and instead keep track of a count variable.
+#
+# Uses O(1) extra memory, runs in O(n log n) time.
 class HeapSorter < BinaryMinHeap
   attr_reader :count
 
@@ -105,7 +110,7 @@ class HeapSorter < BinaryMinHeap
 
   def run
     @store.length.times { self.push }
-    @store.length.times { self.pop }
+    @store.length.times { self.extract }
   end
 
   protected
@@ -114,13 +119,13 @@ class HeapSorter < BinaryMinHeap
     heapify_up(count - 1)
   end
 
-  def pop
-    popped_value = @store[0]
+  def extract
+    value = @store[0]
     @store[0] = @store[self.count - 1]
     @count -= 1
     heapify_down(0)
 
-    @store[self.count] = popped_value
+    @store[self.count] = value
   end
 end
 
@@ -130,3 +135,5 @@ class Array
     self.reverse!
   end
 end
+
+fail unless [5, 3, 4, 2, 1, 6].heap_sort! == [1, 2, 3, 4, 5, 6]
