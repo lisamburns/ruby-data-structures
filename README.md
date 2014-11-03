@@ -133,6 +133,7 @@
 * Trees
     * [Trie](http://en.wikipedia.org/wiki/Trie)
     * [B-Trees](http://en.wikipedia.org/wiki/B-tree)
+* [External Sorting](http://en.wikipedia.org/wiki/External_sorting)
 * [Bloom Filters](http://en.wikipedia.org/wiki/Bloom_filter)
 * [Backtracking search](http://en.wikipedia.org/wiki/Backtracking)
 * [Computational Complexity Theory](http://en.wikipedia.org/wiki/Computational_complexity_theory)
