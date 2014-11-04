@@ -69,15 +69,13 @@
 
 ## w13d5: Heaps
 
-* Priority Queue
-* TreeHeap
-* ArrayHeap
-* Uses:
-    * work-queue
-    * max k items
-    * Dijkstra's algorithm (later)
+* [Heap I][heap-1]
+
+[heap-1]: ./w13d5/heap-1.md
 
 ## w14d1: Heaps Continued
+
+* Array Heap and HeapSort
 
 ## w14d3: Sorting
 
