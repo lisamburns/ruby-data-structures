@@ -6,3 +6,8 @@
 * Depth of tree as related to number of elements.
     * Derivation of the max size of 32 bit number.
 * Dijkstra's algorithm for an example.
+* Examples:
+    * Priority Queue
+    * Heapsort
+    * kth min element
+    * Dijkstra's algorithm
