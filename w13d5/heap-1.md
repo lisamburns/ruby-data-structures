@@ -5,9 +5,10 @@
 * Heapify up, heapify down.
 * Depth of tree as related to number of elements.
     * Derivation of the max size of 32 bit number.
-* Dijkstra's algorithm for an example.
 * Examples:
     * Priority Queue
+    * Dijkstra's algorithm
     * Heapsort
     * kth min element
-    * Dijkstra's algorithm
+        * Can be done in O(k log n) if you build the heap in O(n) time.
+        * Can do it in O(n log k) with a min heap of size k.

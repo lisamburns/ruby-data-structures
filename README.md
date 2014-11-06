@@ -75,7 +75,9 @@
 
 ## w14d1: Heaps Continued
 
-* Array Heap and HeapSort
+* [Array Representation of Heap, Heapsort][heap-2]
+
+[heap-2]: ./w14d1/heap-2.md
 
 ## w14d3: Sorting
 
