@@ -81,9 +81,9 @@
 
 ## w14d3: Sorting
 
-* MergeSort
-* QuickSort
-* HeapSort
+* [Sorting][sorting]
+
+[sorting]: ./w14d3/sorting.md
 
 ## w14d5: Sorting II
 
