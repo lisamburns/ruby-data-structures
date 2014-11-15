@@ -111,6 +111,8 @@
 
 ## Bonus Topics
 
+* [Next Steps][next-steps]
 * [A list of bonus topics][bonus].
 
+[next-steps]: ./next-steps.md
 [bonus]: ./bonus.md
