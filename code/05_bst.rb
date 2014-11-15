@@ -13,11 +13,23 @@ class AVLTreeNode
   end
 
   def balance
-    (self.right.try(:depth) || 0) - (self.left.try(:depth) || 0)
+    (right.try(:depth) || 0) - (left.try(:depth) || 0)
   end
 
   def balanced?
     balance.abs < 2
+  end
+
+  def parent_side
+    return nil if parent.nil?
+    parent.left == self ? :left : :right
+  end
+
+  def recalculate_depth!
+    self.depth = [
+      left.try(:depth) || 0,
+      right.try(:depth) || 0
+    ].max + 1
   end
 end
 
@@ -31,118 +43,140 @@ class AVLTree
   end
 
   def include?(value)
-    vertex = @root
-    until vertex.nil?
-      return true if vertex.value == value
-
-      if value < vertex.value
-        vertex = vertex.left
-      else
-        vertex = vertex.right
-      end
-    end
-
-    false
+    vertex, parent = find(value)
+    !!vertex
   end
 
   def insert(value)
-    return if include?(value)
-
-    if self.empty?
+    if empty?
       @root = AVLTreeNode.new(value)
-      return
+      return true
     end
 
-    # Build and attach the new vertex
-    parent = find_parent(value)
-    child = AVLTreeNode.new(value)
-    value.parent = parent
+    vertex, parent = find(value)
+
+    # Don't re-insert if tree already contains the vertex
+    return false if vertex
+
+    # Insert a new AVLTreeNode if not in the tree yet.
+    vertex = AVLTreeNode.new(value)
     if value < parent.value
-      parent.left = child
+      parent.left = vertex
+      vertex.parent = parent
     else
-      parent.right = child
+      parent.right = vertex
+      vertex.parent = parent
     end
 
-    # perform rebalancings
+    # Walk back up, updating depths and maybe rebalancing.
+    update(parent)
+  end
+
+  def traverse(vertex = @root, &prc)
+    return if vertex.nil?
+    traverse(vertex.left, &prc)
+    prc.call(vertex.value)
+    traverse(vertex.right, &prc)
   end
 
   protected
-  def find_parent(value)
-    vertex = @root
+  def find(value)
+    vertex, parent = @root, nil
 
-    until true
-      return if vertex.value == value
+    until vertex.nil?
+      break if vertex.value == value
 
+      parent = vertex
       if value < vertex.value
-        break if vertex.left.nil?
         vertex = vertex.left
       else
-        break if vertex.right.nil?
         vertex = vertex.right
       end
     end
 
-    vertex
+    [vertex, parent]
   end
 
-  def rebalance_vertex!(vertex)
-    update_depth!(vertex)
-
-    return if vertex.balanced?
+  def update(vertex)
+    return if vertex.nil?
 
     if vertex.balance == -2
       # We'll left rotate around vertex
       if vertex.left.balance == 1
-        # We need to right rotate around vertex.left first.
-        right_rotate!(vertex.left)
+        # We may need to right rotate around vertex.left first.
+        left_rotate!(vertex.left)
       end
 
-      left_rotate!(vertex)
+      right_rotate!(vertex)
     elsif vertex.balance == 2
       # We'll right rotate around vertex
       if vertex.right.balance == -1
         # We need to left rotate around vertex.right first.
-        left_rotate!(vertex.right)
+        right_rotate!(vertex.right)
       end
 
-      right_rotate!(vertex)
+      left_rotate!(vertex)
+    elsif vertex.balance.abs < 2
+      # already balanced
     else
       raise "WTF?"
     end
-  end
 
-  def update_depth!(vertex)
-    child_depths = [
-      vertex.left.try(:depth) || 0, vertex.right.try(:depth) || 0
-    ]
-    vertex.depths = child_depths.max + 1
+    vertex.recalculate_depth!
+    update(vertex.parent)
   end
 
   def left_rotate!(parent)
-    left_child, right_child = parent.left, parent.right
+    parent_parent, parent_side = parent.parent, parent.parent_side
+    r_child = parent.right
+    rl_child = r_child.try(:left)
 
-    parent.left_child = left_child.right_child
-    parent.left_child.try(:parent=, parent)
+    if parent_parent && parent_side == :left
+      parent_parent.left = r_child
+    elsif parent_parent && parent_side == :right
+      parent_parent.right = r_child
+    else
+      @root = r_child
+    end
+    r_child.parent = parent_parent
 
-    left_child.right_child = parent
-    left_child.parent = parent.parent
-    parent.parent = left_child
+    r_child.left = parent
+    parent.parent = r_child
 
-    update_depth!(parent)
-    update_depth!(left_child)
+    parent.right = rl_child
+    rl_child.parent = parent if rl_child
+
+    parent.recalculate_depth!
   end
 
   def right_rotate!(parent)
-    left_child, right_child = parent.left, parent.right
+    parent_parent, parent_side = parent.parent, parent.parent_side
+    l_child = parent.left
+    lr_child = l_child.try(:right)
 
-    parent.right_child = right_child.left_child
-    parent.right_child.try(:parent=, parent)
+    if parent_parent && parent_side == :left
+      parent_parent.left = l_child
+    elsif parent_parent && parent_side == :right
+      parent_parent.right = l_child
+    else
+      @root = l_child
+    end
+    l_child.parent = parent_parent
 
-    right_child.left_child = parent
-    right_child.parent = parent.parent
-    parent.parent = right_child
+    l_child.right = parent
+    parent.parent = l_child
 
-    update_depth!(parent)
-    update_depth!(right_child)
+    parent.left = lr_child
+    lr_child.parent = parent if lr_child
+
+    parent.recalculate_depth!
   end
+end
+
+tree = AVLTree.new
+nums = (1...100).to_a.sample(50).shuffle!
+nums.each { |num| tree.insert(num) }
+# tree.traverse { |num| p num }
+nums.each do |num|
+  fail unless tree.include?(num)
 end
