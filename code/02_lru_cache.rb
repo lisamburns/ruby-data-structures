@@ -192,7 +192,7 @@ class LRUCache
     end
 
     value = @prc.call(key)
-    @links_hash[key] = @linked_list.unshift(value)
+    @links_hash[key] = @linked_list.push(value)
 
     value
   end
