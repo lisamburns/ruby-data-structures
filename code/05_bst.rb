@@ -62,20 +62,22 @@ class AVLTree
     vertex = AVLTreeNode.new(value)
     if value < parent.value
       parent.left = vertex
-      vertex.parent = parent
     else
       parent.right = vertex
-      vertex.parent = parent
     end
+    vertex.parent = parent
 
     # Walk back up, updating depths and maybe rebalancing.
     update(parent)
+
+    true
   end
 
   def traverse(vertex = @root, &prc)
     return if vertex.nil?
     traverse(vertex.left, &prc)
-    prc.call(vertex.value)
+    # I pass the vertex too for testing purposes later.
+    prc.call(vertex.value, vertex)
     traverse(vertex.right, &prc)
   end
 
@@ -119,6 +121,7 @@ class AVLTree
     elsif vertex.balance.abs < 2
       # already balanced
     else
+      # This should never happen.
       raise "WTF?"
     end
 
@@ -180,3 +183,19 @@ nums.each { |num| tree.insert(num) }
 nums.each do |num|
   fail unless tree.include?(num)
 end
+
+# Just for testing purposes
+class AVLTreeNode
+  def deep_recalculate_depth!
+    self.depth = [
+      left.try(:deep_recalculate_depth!) || 0,
+      right.try(:deep_recalculate_depth!) || 0
+    ].max + 1
+  end
+end
+
+# Be paranoid and recalculate the depths in case the `@depth` attribute
+# was calculated wrong.
+tree.traverse { |_, vertex| vertex.deep_recalculate_depth! }
+# Make sure everything is balanced.
+tree.traverse { |_, vertex| fail unless vertex.balanced? }
