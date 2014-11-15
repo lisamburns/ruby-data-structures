@@ -40,5 +40,5 @@ word to the dictionary is going down as the dictionary gets bigger.
 This is a very desirable kind of problem; it is called
 **logarithmic**.
 
-These are our first three *complexity classes*: logarithmic, linear,
+These are our first three **complexity classes**: logarithmic, linear,
 and exponential. We'll see a few others soon.
