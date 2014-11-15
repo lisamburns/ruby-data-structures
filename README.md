@@ -105,13 +105,9 @@
 
 ## w15d5+: Graphs
 
-* Graphs
-    * Different versions of time complexity
-    * Topological Sort
-    * BFS shortest paths
-    * Dijkstra's Algorithm
-    * Prim's Algorithm
-    * Floyd-Warshall Algorithm
+* [Graphs][graphs]
+
+[graphs]: ./w15d5/graphs.md
 
 ## Bonus Topics
 
