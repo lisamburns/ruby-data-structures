@@ -74,29 +74,34 @@ class BinaryMinHeap
 
   def heapify_down(parent_idx)
     l_child_idx, r_child_idx = child_indices(parent_idx)
-    parent_val, l_child_val, r_child_val =
-      @store[parent_idx],
-      l_child_idx && @store[l_child_idx],
-      r_child_idx && @store[r_child_idx]
+
+    parent_val = @store[parent_idx]
+    l_child_val = l_child_idx && @store[l_child_idx]
+    r_child_val = r_child_idx && @store[r_child_idx]
 
     # We compact because `l_child_val`, `r_child_val` could be nil if
     # any child indices are outside the range of the store.
-    heap_prop_valid = [l_child_val, r_child_val].compact.all? do |child_val|
-      child_val >= parent_val
+    heap_prop_valid = [l_child_idx, r_child_idx].compact.all? do |child_idx|
+      @store[child_idx] > parent_val
     end
 
     if heap_prop_valid
       # Leaf or both children_vals <= parent_val
       return
-    else
-      # Choose smaller of two children.
-      swap_idx = (r_child_val.nil? || l_child_val <= r_child_val) ?
-        l_child_idx : r_child_idx
-
-      @store[parent_idx], @store[swap_idx] =
-        @store[swap_idx], parent_val
-      heapify_down(swap_idx)
     end
+
+    # Choose smaller of two children.
+    swap_idx = nil
+    if r_child_val.nil?
+      swap_idx = l_child_idx
+    elsif l_child_val < r_child_val
+      swap_idx = l_child_idx
+    else
+      swap_idx = r_child_idx
+    end
+
+    @store[parent_idx], @store[swap_idx] = @store[swap_idx], parent_val
+    heapify_down(swap_idx)
   end
 
   def heapify_up(child_idx)
