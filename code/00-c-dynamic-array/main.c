@@ -19,9 +19,13 @@ int main () {
 
   // pop them all off
   while (length(dynArrp) > 0) {
-    printf("#%d: %s\n", length(dynArrp) - 1, pop(dynArrp));
+    int position = length(dynArrp) - 1;
+    char* str = pop(dynArrp);
+    printf("#%d: %s\n", position, str);
+    free(str);
   }
   printf("Length: %d\n", length(dynArrp));
+  freeDynamicArray(dynArrp);
 
   return 0;
 }

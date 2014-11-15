@@ -54,6 +54,11 @@ DynamicArray* createDynamicArray() {
   return dynArrp;
 }
 
+void freeDynamicArray(DynamicArray* arrp) {
+  free(arrp->_store);
+  free(arrp);
+}
+
 // "method" to return the length of a dynamic array.
 int length(DynamicArray* dynArrp) {
   return dynArrp->_len;
