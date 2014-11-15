@@ -88,9 +88,9 @@
 
 ## w14d5: Sorting II
 
-* Sorting performance
-* RAM Caching
-* CPU Architecture
+* [Sorting performance][sorting-2]
+
+[sorting-2]: ./w14d5/sorting-2.md
 
 ## w15d1: Binary Search Tree
 

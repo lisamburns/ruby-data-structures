@@ -123,31 +123,3 @@ implementations, the first element was typically chosen. This was a
 bad choice, because if the array is already sorted, `arr[0]` is the
 worst possible pivot choice. Since it is common to encounter sorted
 arrays, another pivot choice was made.
-
-## Quicksort vs Mergesort
-
-Mergesort has the better worst-case time performane (`O(nlogn)` vs
-`O(n**2)`), while quicksort and mergesort are tied in average case
-performance (`O(nlogn)`).
-
-Quicksort can be done in-place and has good **locality of
-reference**. The processor likes working on contiguous arrays; it
-doesn't like jumping around in memory a lot. Since merging requires
-reading two separate arrays to merge into a third, the processor is
-required to jump from reading one array to another, and then jumping
-to yet another array to copy. In quicksort, all the copying happens
-inside a single array.
-
-In practice, this means that quicksort typically runs faster than
-mergesort.
-
-Quicksort also has the advantage of requiring `log(n)` additional
-memory (because of the stack-depth of size `log(n)`), vs `O(n)` extra
-memory for mergesort.
-
-## Bonus
-
-* Heapsort: requires less memory than mergesort, same asymptotic
-  guarantee.
-* Mergesort: good for sequential access, linked lists.
-* Mergesort tends to do fewer comparisons than quicksort.
