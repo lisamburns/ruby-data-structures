@@ -111,6 +111,6 @@
 
 ## Bonus Topics
 
-* [A list of bonus topics].
+* [A list of bonus topics][bonus].
 
 [bonus]: ./bonus.md
