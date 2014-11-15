@@ -82,6 +82,7 @@
 ## w14d3: Sorting
 
 * [Sorting][sorting]
+    * TODO: review. QuickSort.
 
 [sorting]: ./w14d3/sorting.md
 
@@ -93,21 +94,15 @@
 
 ## w15d1: Binary Search Tree
 
-* BSTs; self-balancing tree
-    * Balancing can't go wrong.
-    * No O(n) worst case
-    * In-order traversal
-* Traversal algorithms.
-    * Database index
-    * Optimizes where using comparison, and order by.
-    * What is the time complexity of pkey lookup? Seems like
-      sort-merge join is O(nlog n) if it's O(log n) to look up an
-      record by pkey. Same would apply for hash join??
-    * Maybe duplicates of all columns are stored in the index?? Isn't
-      that super wasteful?
-    * Btree is more memory friendly than hashes, BTW.
+* [Tree Set 1][tree-set-1]
+
+[tree-set-1]: ./w15d1/tree-set-1.md
 
 ## w15d3: BST II
+
+* [Tree Set 2][tree-set-2]
+
+[tree-set-2]: ./w15d3/tree-set-2.md
 
 ## w15d5+: Graphs
 
