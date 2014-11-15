@@ -13,5 +13,3 @@
   doesn't make sense to cache more stuff.
 * Therefore, we need `O(1)` cache eviction. That's covered in the next
   lecture.
-
-**TODO**: This day just talks about optimal caching, a simple LRUCache using a hash.
