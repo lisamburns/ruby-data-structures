@@ -133,4 +133,4 @@ they just negatively affect performance.
 
 ## Bonus
 
-**TODO**: passwords, salting, blowfish.
+* Passwords, salting, blowfish.
