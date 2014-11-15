@@ -22,7 +22,3 @@
 * The CPU executes instructions one-by-one.
 * Some instructions like `JZ` (jump if zero) can conditionally jump to
   other memory cells, which is how branching happens.
-
-## Bonus: Objects Representation
-
-* **TODO**: write me!
