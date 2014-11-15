@@ -1,3 +1,6 @@
+// You can compile this program by running `gcc main.c -o main`. Then
+// you can run `./main`.
+//
 // normally we don't `#include` source files, but I'm making an
 // exception here.
 #include "./dynarray.c"
