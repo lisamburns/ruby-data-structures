@@ -17,12 +17,12 @@ We define
 Note that `O(f)` is a **set of functions**. Here is a table of
 examples:
 
-`f`|`g`|`f` dominates `g`?|`g` dominates `f`?|`f` in `O(g)`|`g` in `O(f)`
--|----|-----|-----|----|----
-1|1   |false|false|true|true
-1|n   |false|true |true|false
-n|n   |false|false|true|true
-n|n**2|false|true |true|false
+`f` |`g`  |`f` dominates `g`? |`g` dominates `f`? |`f` in `O(g)` |`g` in `O(f)`
+----|-----|-------------------|-------------------|--------------|-------------
+1   |1    |false              |false              |true          |true
+1   |n    |false              |true               |true          |false
+n   |n    |false              |false              |true          |true
+n   |n**2 |false              |true               |true          |false
 
 To be hyper-accurate, we would say that the function `f(n) = n` is in
 the set `O(n**2)` (since `n**2` dominates `n`). Speaking less
