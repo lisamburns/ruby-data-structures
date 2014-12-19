@@ -104,7 +104,7 @@ same value.
 We know that if `obj1 == obj2`, we need `obj1.hash == obj2.hash`. So
 is a hash function that always returns zero a good hash function?
 
-If `obj1.hash == obj2.hash`, but `obj1.hash != obj2.hash`, this is
+If `obj1.hash == obj2.hash`, but `obj1 != obj2`, this is
 called a **hash collision**. For the purpose of hash sets, collisions
 are not the end of the world. We've seen that two different objects
 can end up in the same bucket if `obj1.hash % @buckets.length ==
