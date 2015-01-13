@@ -113,7 +113,7 @@ class LinkedList
       raise "index out of bounds" if link == last
     end
 
-    link.value
+    link
   end
 
   def empty?
@@ -167,19 +167,6 @@ class LinkedList
   attr_accessor :first, :last
 end
 
-FIBS = [0, 1, 1, 2, 3, 5]
-ll = LinkedList.new
-FIBS.each { |num| ll.push(num) }
-arr = []
-6.times { arr << ll.shift }
-raise "hell" unless arr == FIBS
-
-ll = LinkedList.new
-FIBS.each { |num| ll.unshift(num) }
-arr = []
-6.times { arr << ll.pop }
-raise "hell" unless arr == FIBS
-
 class LRUCache
   attr_reader :cache_hits, :cache_misses
 
@@ -224,9 +211,9 @@ def fib1(n)
   return fib1(n - 2) + fib1(n - 1)
 end
 
-p "Start of fib1: #{Time.now}"
-p fib1(36)
-p "End of fib1: #{Time.now}"
+#p "Start of fib1: #{Time.now}"
+#p fib1(36)
+#p "End of fib1: #{Time.now}"
 
 class CachedFibber < LRUCache
   def initialize(max_size)
@@ -242,9 +229,9 @@ class CachedFibber < LRUCache
   end
 end
 
-p "Start of fib2: #{Time.now}"
-$fibber = CachedFibber.new(10)
-$fibber.calculate(36)
-p "End of fib2: #{Time.now}"
-p "Cache hits: #{$fibber.cache_hits}"
-p "Cache misses: #{$fibber.cache_misses}"
+#p "Start of fib2: #{Time.now}"
+#$fibber = CachedFibber.new(10)
+#$fibber.calculate(36)
+#p "End of fib2: #{Time.now}"
+#p "Cache hits: #{$fibber.cache_hits}"
+#p "Cache misses: #{$fibber.cache_misses}"
