@@ -1,46 +1,48 @@
+# This class just dumbs down a regular Array to be staticly sized.
 class StaticArray
   def initialize(length)
-    @store = Array.new(length, nil)
+    self.store = Array.new(length, nil)
   end
 
   # O(1)
   def [](index)
-    return @store[index]
+    return store[index]
   end
 
   # O(1)
   def []=(index, value)
-    @store[index] = value
+    store[index] = value
   end
+
+  protected
+  attr_accessor :store
 end
 
 class DynamicArray
   attr_reader :length
 
   def initialize
-    @store = StaticArray.new(8)
-    @capacity = 8
-    @length = 0
+    self.store, self.capacity, self.length = StaticArray.new(8), 8, 0
   end
 
   # O(1)
   def [](index)
     check_index(index)
-    @store[index]
+    store[index]
   end
 
   # O(1)
   def []=(index, value)
     check_index(index)
-    @store[index] = value
+    store[index] = value
   end
 
   # O(1)
   def pop
-    raise "index out of bounds!" unless (length > 0)
+    raise "index out of bounds" unless (length > 0)
 
     val, self[length - 1] = self[length - 1], nil
-    @length -= 1
+    self.length -= 1
 
     val
   end
@@ -50,8 +52,8 @@ class DynamicArray
   def push(val)
     resize! if length == capacity
 
-    # Add to @length to pass length check in `#[]=`.
-    @length += 1
+    # Add to length to pass length check in `#[]=`.
+    self.length += 1
     self[length - 1] = val
 
     nil
@@ -59,11 +61,11 @@ class DynamicArray
 
   # O(n): has to shift over all the elements.
   def shift
-    raise "index out of bounds!" if (length == 0)
+    raise "index out of bounds" if (length == 0)
 
     val = self[0]
     (1...length).each { |i| self[i - 1] = self[i] }
-    @length -= 1
+    self.length -= 1
 
     val
   end
@@ -72,7 +74,7 @@ class DynamicArray
   def unshift(val)
     resize! if length == capacity
 
-    @length += 1
+    self.length += 1
     (length - 2).downto(0).each { |i| self[i + 1] = self[i] }
     self[0] = val
 
@@ -80,11 +82,12 @@ class DynamicArray
   end
 
   protected
-  attr_reader :capacity
+  attr_accessor :capacity, :store
+  attr_writer :length
 
   def check_index(index)
     unless (index >= 0) && (index < length)
-      raise "index out of bounds!"
+      raise "index out of bounds"
     end
   end
 
@@ -94,55 +97,37 @@ class DynamicArray
     new_store = StaticArray.new(new_capacity)
     length.times { |i| new_store[i] = self[i] }
 
-    @capacity = new_capacity
-    @store = new_store
+    self.capacity = new_capacity
+    self.store = new_store
   end
 end
-
-darr = DynamicArray.new
-100.times { |i| darr.push(i) }
-arr = []
-while darr.length > 0
-  arr << darr.pop
-end
-fail unless arr == (0...100).to_a.reverse!
-
-darr = DynamicArray.new
-100.times { |i| darr.unshift(i) }
-arr = []
-while darr.length > 0
-  arr << darr.shift
-end
-fail unless arr == (0...100).to_a.reverse!
 
 class CircularBuffer
   attr_reader :length
 
   def initialize
-    @store = StaticArray.new(8)
-    @capacity = 8
-    @start_idx = 0
-    @length = 0
+    self.store, self.capacity = StaticArray.new(8), 8
+    self.start_idx, self.length = 0, 0
   end
 
   # O(1)
   def [](index)
     check_index(index)
-    @store[(@start_idx + index) % capacity]
+    store[(start_idx + index) % capacity]
   end
 
   # O(1)
   def []=(index, val)
     check_index(index)
-    @store[(@start_idx + index) % capacity] = val
+    store[(start_idx + index) % capacity] = val
   end
 
   # O(1)
   def pop
-    raise "index out of bounds!" if (length == 0)
+    raise "index out of bounds" if (length == 0)
 
     val, self[length - 1] = self[length - 1], nil
-    @length -= 1
+    self.length -= 1
 
     val
   end
@@ -151,7 +136,7 @@ class CircularBuffer
   def push(val)
     resize! if (length == capacity)
 
-    @length += 1
+    self.length += 1
     self[length - 1] = val
 
     nil
@@ -159,11 +144,11 @@ class CircularBuffer
 
   # O(1)
   def shift
-    raise "index out of bounds!" if (length == 0)
+    raise "index out of bounds" if (length == 0)
 
     val, self[0] = self[0], nil
-    @start_idx = (@start_idx + 1) % capacity
-    @length -= 1
+    self.start_idx = (start_idx + 1) % capacity
+    self.length -= 1
 
     val
   end
@@ -172,17 +157,18 @@ class CircularBuffer
   def unshift(val)
     resize! if (length == capacity)
 
-    @start_idx = (@start_idx - 1) % capacity
-    @length += 1
+    self.start_idx = (start_idx - 1) % capacity
+    self.length += 1
     self[0] = val
   end
 
   protected
-  attr_reader :capacity
+  attr_accessor :capacity, :start_idx, :store
+  attr_writer :length
 
   def check_index(index)
     unless (index >= 0) && (index < length)
-      raise "index out of bounds!"
+      raise "index out of bounds"
     end
   end
 
@@ -191,24 +177,8 @@ class CircularBuffer
     new_store = StaticArray.new(new_capacity)
     length.times { |i| new_store[i] = self[i] }
 
-    @capacity = new_capacity
-    @store = new_store
-    @start_idx = 0
+    self.capacity = new_capacity
+    self.store = new_store
+    self.start_idx = 0
   end
 end
-
-carr = CircularBuffer.new
-100.times { |i| carr.push(i) }
-arr = []
-while carr.length > 0
-  arr << carr.pop
-end
-fail unless arr == (0...100).to_a.reverse!
-
-carr = CircularBuffer.new
-100.times { |i| carr.unshift(i) }
-arr = []
-while carr.length > 0
-  arr << carr.shift
-end
-fail unless arr == (0...100).to_a.reverse!
