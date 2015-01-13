@@ -4,13 +4,13 @@ class Link
   attr_reader :next, :prev
 
   def initialize(value)
-    @value = value
+    self.value = value
   end
 
   # Add the link before us
   def insert_left(link)
-    if link.next || link.prev
-      raise "trying to insert a link that's not bare!"
+    unless link.is_detached?
+      raise "trying to insert a link that's not detached!"
     end
 
     link.next = self
@@ -23,8 +23,8 @@ class Link
 
   # Add the link after us
   def insert_right(link)
-    if link.next || link.prev
-      raise "trying to insert a link that's not bare!"
+    unless link.is_detached?
+      raise "trying to insert a link that's not detached!"
     end
 
     link.prev = self
@@ -33,6 +33,10 @@ class Link
     self.next = link
 
     nil
+  end
+
+  def is_detached?
+    !(self.next || self.prev)
   end
 
   def remove
@@ -50,26 +54,26 @@ end
 class SentinelLink < Link
   def initialize(side)
     raise "incorrect side choice" unless [:first, :last].include?(side)
-    @side = side
+    self.side = side
   end
 
   def prev=(link)
-    if @side == :last
+    if side == :last
       return super(link)
     elsif link.nil?
-      # always keep the prev of the first sentinel nil
+      # the first sentinel may allow superfluous set of prev to `nil`.
     else
-      raise "can't set prev of left sentinel"
+      raise "can't set prev of first sentinel"
     end
   end
 
   def next=(link)
-    if @side == :first
+    if side == :first
       return super(link)
     elsif link.nil?
-      # always keep the next of the last sentinel nil
+      # the last sentinel may allow superfluous set of next to `nil`.
     else
-      raise "can't set prev of left sentinel"
+      raise "can't set prev of last sentinel"
     end
   end
 
@@ -84,27 +88,29 @@ class SentinelLink < Link
   def remove
     raise "Can't remove a sentinel!"
   end
+
+  protected
+  attr_accessor :side
 end
 
 class LinkedList
-  attr_reader :first, :last
-
   def initialize
-    @first = SentinelLink.new(:first)
-    @last = SentinelLink.new(:last)
+    self.first = SentinelLink.new(:first)
+    self.last = SentinelLink.new(:last)
 
-    @first.insert_right(@last)
+    self.first.insert_right(self.last)
   end
 
   # O(n): don't use me!
   def [](idx)
     raise "index out of bounds" if idx < 0
 
-    link = first.next
-    idx.times do
+    link = first
+    (idx + 1).times do
+      link = link.next
+
       # We overran the list if we ever hit the sentinel.
       raise "index out of bounds" if link == last
-      link = link.next
     end
 
     link.value
@@ -156,6 +162,9 @@ class LinkedList
     first.insert_right(link)
     link
   end
+
+  protected
+  attr_accessor :first, :last
 end
 
 FIBS = [0, 1, 1, 2, 3, 5]
