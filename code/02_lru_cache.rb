@@ -172,9 +172,14 @@ arr = []
 raise "hell" unless arr == FIBS
 
 class LRUCache
+  attr_reader :cache_hits, :cache_misses
+
   def initialize(max_size, &prc)
     @links_hash, @linked_list, @max_size, @prc =
       {}, LinkedList.new, max_size, prc
+
+    # Logging
+    @cache_hits, @cache_misses = 0, 0
   end
 
   def [](key)
@@ -182,13 +187,19 @@ class LRUCache
       link = @links_hash[key]
       link.remove
       @linked_list.push_link(link)
+
+      # Logging
+      @cache_hits += 1
+
       return link.value
     end
 
-    p "NOT CACHED"
+    # Logging
+    @cache_misses += 1
 
     if @links_hash.count == @max_size
-      @linked_list.shift
+      link = @linked_list.shift
+      @links_hash.delete(link.key)
     end
 
     value = @prc.call(key)
@@ -208,16 +219,23 @@ p "Start of fib1: #{Time.now}"
 p fib1(36)
 p "End of fib1: #{Time.now}"
 
-@cache = LRUCache.new(10) do |n|
-  next 0 if n == 0
-  next 1 if n == 1
-  next @cache[n - 2] + @cache[n - 1]
-end
+class CachedFibber < LRUCache
+  def initialize(max_size)
+    super(max_size) do |n|
+      next 0 if n == 0
+      next 1 if n == 1
+      next self[n - 2] + self[n - 1]
+    end
+  end
 
-def fib2(n)
-  @cache[n]
+  def calculate(n)
+    self[n]
+  end
 end
 
 p "Start of fib2: #{Time.now}"
-p fib2(36)
+$fibber = CachedFibber.new(10)
+$fibber.calculate(36)
 p "End of fib2: #{Time.now}"
+p "Cache hits: #{$fibber.cache_hits}"
+p "Cache misses: #{$fibber.cache_misses}"
