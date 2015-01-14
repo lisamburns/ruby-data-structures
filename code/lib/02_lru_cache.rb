@@ -194,8 +194,8 @@ class LRUCache
     @cache_misses += 1
 
     if @links_hash.count == @max_size
-      link = @linked_list.shift
-      @links_hash.delete(link.key)
+      link = @linked_list.shift_link
+      @links_hash.delete(link.value)
     end
 
     value = @prc.call(key)
@@ -205,15 +205,24 @@ class LRUCache
   end
 end
 
-def fib1(n)
-  return 0 if n == 0
-  return 1 if n == 1
-  return fib1(n - 2) + fib1(n - 1)
-end
+class UncachedFibber
+  attr_reader :calculations
 
-#p "Start of fib1: #{Time.now}"
-#p fib1(36)
-#p "End of fib1: #{Time.now}"
+  def initialize
+    self.calculations = 0
+  end
+
+  def calculate(n)
+    self.calculations += 1
+
+    return 0 if n == 0
+    return 1 if n == 1
+    return calculate(n - 2) + calculate(n - 1)
+  end
+
+  protected
+  attr_writer :calculations
+end
 
 class CachedFibber < LRUCache
   def initialize(max_size)
@@ -229,9 +238,22 @@ class CachedFibber < LRUCache
   end
 end
 
-#p "Start of fib2: #{Time.now}"
-#$fibber = CachedFibber.new(10)
-#$fibber.calculate(36)
-#p "End of fib2: #{Time.now}"
-#p "Cache hits: #{$fibber.cache_hits}"
-#p "Cache misses: #{$fibber.cache_misses}"
+def main
+  uncached_fibber = UncachedFibber.new
+  puts "Start of UncachedFibber: #{Time.now}"
+  puts uncached_fibber.calculate(35)
+  puts "End of UncachedFibber: #{Time.now}"
+  puts "Number of calculations: #{uncached_fibber.calculations}"
+
+  # Just a little cache can help a lot!
+  cached_fibber = CachedFibber.new(10)
+  puts "Start of CachedFibber: #{Time.now}"
+  puts cached_fibber.calculate(35)
+  puts "End of CachedFibber: #{Time.now}"
+  puts "Cache hits: #{cached_fibber.cache_hits}"
+  puts "Cache misses: #{cached_fibber.cache_misses}"
+end
+
+if $PROGRAM_NAME == __FILE__
+  main
+end
