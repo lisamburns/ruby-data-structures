@@ -168,14 +168,14 @@ class LinkedList
 end
 
 class LRUCache
-  attr_reader :cache_hits, :cache_misses
+  attr_reader :hits, :misses
 
   def initialize(max_size, &prc)
     @links_hash, @linked_list, @max_size, @prc =
       {}, LinkedList.new, max_size, prc
 
     # Logging
-    @cache_hits, @cache_misses = 0, 0
+    self.hits, self.misses = 0, 0
   end
 
   def [](key)
@@ -185,13 +185,13 @@ class LRUCache
       @linked_list.push_link(link)
 
       # Logging
-      @cache_hits += 1
+      self.hits += 1
 
       return link.value
     end
 
     # Logging
-    @cache_misses += 1
+    self.misses += 1
 
     if @links_hash.count == @max_size
       link = @linked_list.shift_link
@@ -203,6 +203,9 @@ class LRUCache
 
     value
   end
+
+  protected
+  attr_writer :hits, :misses
 end
 
 class UncachedFibber
@@ -224,18 +227,27 @@ class UncachedFibber
   attr_writer :calculations
 end
 
-class CachedFibber < LRUCache
+class CachedFibber
+  attr_reader :cache
+
   def initialize(max_size)
-    super(max_size) do |n|
-      next 0 if n == 0
-      next 1 if n == 1
-      next self[n - 2] + self[n - 1]
+    self.cache = LRUCache.new(max_size) do |n|
+      calculate(n, false)
     end
   end
 
-  def calculate(n)
-    self[n]
+  def calculate(n, use_cache = true)
+    if use_cache
+      return cache[n]
+    end
+
+    return 0 if n == 0
+    return 1 if n == 1
+    return self.calculate(n - 2) + self.calculate(n - 1)
   end
+
+  protected
+  attr_writer :cache
 end
 
 def main
@@ -250,8 +262,8 @@ def main
   puts "Start of CachedFibber: #{Time.now}"
   puts cached_fibber.calculate(35)
   puts "End of CachedFibber: #{Time.now}"
-  puts "Cache hits: #{cached_fibber.cache_hits}"
-  puts "Cache misses: #{cached_fibber.cache_misses}"
+  puts "Cache hits: #{cached_fibber.cache.hits}"
+  puts "Cache misses: #{cached_fibber.cache.misses}"
 end
 
 if $PROGRAM_NAME == __FILE__
