@@ -1,12 +1,12 @@
 class MergeSort
   # Uses O(n) memory. Always takes O(nlogn) time.
-  def self.sort(&prc)
-    return self.dup if self.length < 2
+  def self.sort(array, &prc)
+    return array.dup if array.length < 2
 
-    left_size = self.length / 2
+    left_size = array.length / 2
     merge(
-      self.take(left_size).merge_sort,
-      self.drop(left_size).merge_sort,
+      sort(array.take(left_size), &prc),
+      sort(array.drop(left_size), &prc),
       &prc
     )
   end
