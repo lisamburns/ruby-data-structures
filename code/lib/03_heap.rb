@@ -1,23 +1,23 @@
 class BinaryMinHeap
   def initialize
-    @store = []
+    self.store = []
   end
 
   def count
-    @store.length
+    store.length
   end
 
   def extract
     raise "no element to extract" if count == 0
 
-    val = @store[0]
+    val = store[0]
 
     if count > 1
-      @store[0] = @store.pop
-      heapify_down(0)
+      store[0] = store.pop
+      self.class.heapify_down(store, 0)
     else
       # Last element left.
-      @store.pop
+      store.pop
     end
 
     val
@@ -25,16 +25,19 @@ class BinaryMinHeap
 
   def peek
     raise "no element to peek" if count == 0
-    @store[0]
+    store[0]
   end
 
   def push(val)
-    @store << val
-    heapify_up(self.count - 1)
+    store << val
+    self.class.heapify_up(store, self.count - 1)
   end
 
   protected
-  def child_indices(parent_index)
+  attr_accessor :store
+
+  public
+  def self.child_indices(len, parent_index)
     # If `parent_index` is the parent of `child_index`:
     #
     # (1) There are `parent_index` previous nodes to
@@ -55,11 +58,11 @@ class BinaryMinHeap
 
     [2 * parent_index + 1, 2 * parent_index + 2].select do |idx|
       # Only keep those in range.
-      idx < self.count
+      idx < len
     end
   end
 
-  def parent_index(child_index)
+  def self.parent_index(child_index)
     # If child_index is odd: `child_index == 2 * parent_index + 1`
     # means `parent_index = (child_index - 1) / 2`.
     #
@@ -72,60 +75,45 @@ class BinaryMinHeap
     (child_index - 1) / 2
   end
 
-  def heapify_down(parent_idx)
-    l_child_idx, r_child_idx = child_indices(parent_idx)
+  def self.heapify_down(array, parent_idx)
+    l_child_idx, r_child_idx = child_indices(array.length, parent_idx)
 
-    parent_val = @store[parent_idx]
-    l_child_val = l_child_idx && @store[l_child_idx]
-    r_child_val = r_child_idx && @store[r_child_idx]
+    parent_val = array[parent_idx]
 
-    # We compact because `l_child_val`, `r_child_val` could be nil if
-    # any child indices are outside the range of the store.
-    heap_prop_valid = [l_child_idx, r_child_idx].compact.all? do |child_idx|
-      @store[child_idx] > parent_val
-    end
+    children = []
+    children << array[l_child_idx] if l_child_idx
+    children << array[r_child_idx] if r_child_idx
 
-    if heap_prop_valid
-      # Leaf or both children_vals <= parent_val
-      return
+    if children.all? { |child| parent_val <= child }
+      # Leaf or both children_vals <= parent_val. As a convenience,
+      # return the modified array.
+      return array
     end
 
     # Choose smaller of two children.
     swap_idx = nil
-    if r_child_val.nil?
-      swap_idx = l_child_idx
-    elsif l_child_val < r_child_val
+    if children.length == 1
       swap_idx = l_child_idx
     else
-      swap_idx = r_child_idx
+      swap_idx = children[0] < children[1] ? l_child_idx : r_child_idx
     end
 
-    @store[parent_idx], @store[swap_idx] = @store[swap_idx], parent_val
-    heapify_down(swap_idx)
+    array[parent_idx], array[swap_idx] = array[swap_idx], parent_val
+    heapify_down(array, swap_idx)
   end
 
-  def heapify_up(child_idx)
-    return if child_idx == 0
+  def self.heapify_up(array, child_idx)
+    # As a convenience, return array
+    return array if child_idx == 0
 
     parent_idx = parent_index(child_idx)
-    child_val, parent_val = @store[child_idx], @store[parent_idx]
+    child_val, parent_val = array[child_idx], array[parent_idx]
     if child_val >= parent_val
       # Heap property valid!
-      return
+      return array
     else
-      @store[child_idx], @store[parent_idx] = parent_val, child_val
-      heapify_up(parent_idx)
+      array[child_idx], array[parent_idx] = parent_val, child_val
+      heapify_up(array, parent_idx)
     end
   end
 end
-
-bheap = BinaryMinHeap.new
-bheap.push(5)
-fail unless bheap.peek == 5
-bheap.push(3)
-fail unless bheap.peek == 3
-bheap.push(8)
-fail unless bheap.peek == 3
-arr = []
-3.times { arr << bheap.extract}
-fail unless arr == [3, 5, 8]

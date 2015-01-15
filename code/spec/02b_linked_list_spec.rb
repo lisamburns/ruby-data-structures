@@ -114,3 +114,7 @@ describe LinkedList do
     expect(list[1]).to eq(link3)
   end
 end
+
+# TODO: Test internals.
+# TODO: Test what happens when you call remove on links. Especially
+# when the list goes empty.
