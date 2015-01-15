@@ -75,8 +75,8 @@ class BinaryMinHeap
     (child_index - 1) / 2
   end
 
-  def self.heapify_down(array, parent_idx)
-    l_child_idx, r_child_idx = child_indices(array.length, parent_idx)
+  def self.heapify_down(array, parent_idx, len = array.length)
+    l_child_idx, r_child_idx = child_indices(len, parent_idx)
 
     parent_val = array[parent_idx]
 
@@ -99,10 +99,10 @@ class BinaryMinHeap
     end
 
     array[parent_idx], array[swap_idx] = array[swap_idx], parent_val
-    heapify_down(array, swap_idx)
+    heapify_down(array, swap_idx, len)
   end
 
-  def self.heapify_up(array, child_idx)
+  def self.heapify_up(array, child_idx, len = array.length)
     # As a convenience, return array
     return array if child_idx == 0
 
@@ -113,7 +113,7 @@ class BinaryMinHeap
       return array
     else
       array[child_idx], array[parent_idx] = parent_val, child_val
-      heapify_up(array, parent_idx)
+      heapify_up(array, parent_idx, len)
     end
   end
 end
