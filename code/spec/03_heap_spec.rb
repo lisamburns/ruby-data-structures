@@ -35,6 +35,28 @@ describe BinaryMinHeap do
       .to eq([1, 3, 5, 4])
   end
 
+  it "heapify_downs with proc correctly" do
+    prc = Proc.new do |el1, el2|
+      -1 * (el1 <=> el2)
+    end
+
+    expect(BinaryMinHeap.heapify_down([1, 2, 3], 0, &prc))
+      .to eq([3, 2, 1])
+    expect(BinaryMinHeap.heapify_down([1, 5, 4, 3], 0, &prc))
+      .to eq([5, 3, 4, 1])
+  end
+
+  it "heapify_ups with proc correctly" do
+    prc = Proc.new do |el1, el2|
+      -1 * (el1 <=> el2)
+    end
+
+    expect(BinaryMinHeap.heapify_up([2, 1, 3], 2, &prc))
+      .to eq([3, 1, 2])
+    expect(BinaryMinHeap.heapify_up([4, 3, 1, 5], 3, &prc))
+      .to eq([5, 4, 1, 3])
+  end
+
   it "pushes correctly" do
     heap = BinaryMinHeap.new
     heap.push(7)
