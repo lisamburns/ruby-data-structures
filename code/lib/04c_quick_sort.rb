@@ -16,23 +16,30 @@ class QuickSort
   end
 
   # In-place. Uses O(log(n)) space for recursion.
-  def self.sort2!(array, start = 0, length = array.length)
+  def self.sort2!(array, start = 0, length = array.length, &prc)
+    prc ||= Proc.new { |el1, el2| el1 <=> el2 }
+
     return array if length < 2
 
-    pivot_idx = partition(array, start, length)
+    pivot_idx = partition(array, start, length, &prc)
 
-    sort2!(array, start, pivot_idx - start)
-    sort2!(array, pivot_idx + 1, length - (pivot_idx + 1))
+    left_length = pivot_idx - start
+    right_length = length - (left_length + 1)
+    sort2!(array, start, left_length, &prc)
+    sort2!(array, pivot_idx + 1, right_length, &prc)
 
     array
   end
 
-  def self.partition(array, start, length)
+  def self.partition(array, start, length, &prc)
+    prc ||= Proc.new { |el1, el2| el1 <=> el2 }
+
     pivot_idx, pivot = start, array[start]
     ((start + 1)...(start + length)).each do |idx|
       val = array[idx]
-      if (val >= pivot)
-        # bigger than pivot, leave where it is.
+      if prc.call(pivot, val) < 1
+        # if the element is greater than or equal to the pivot, leave
+        # where it is.
       else
         # Three-way shuffle: pivot_idx + 1 => idx, pivot_idx =>
         # pivot_idx + 1, idx => pivot_idx.
@@ -52,6 +59,3 @@ class QuickSort
     pivot_idx
   end
 end
-
-fail unless QuickSort.sort1([5, 3, 4, 2, 1, 6]) == [1, 2, 3, 4, 5, 6]
-fail unless QuickSort.sort2!([5, 3, 4, 2, 1, 6]) == [1, 2, 3, 4, 5, 6]
