@@ -1,27 +1,36 @@
-class Array
+class QuickSort
   # Quick sort has average case time complexity O(nlogn), but worst
   # case O(n**2).
 
   # Not in-place. Uses O(n) memory.
-  def quick_sort1
-    return self if self.empty?
+  def self.sort1(array)
+    return array if array.empty?
 
-    pivot = self[0]
+    pivot = array[0]
 
-    left = self.select { |el| pivot > el }
-    middle = self.select { |el| pivot == el }
-    right = self.select { |el| pivot < el }
+    left = array.select { |el| pivot > el }
+    middle = array.select { |el| pivot == el }
+    right = array.select { |el| pivot < el }
 
-    (left.quick_sort1) + middle + (right.quick_sort1)
+    sort1(left) + middle + sort1(right)
   end
 
   # In-place. Uses O(log(n)) space for recursion.
-  def quick_sort2!(left = 0, right = self.length)
-    return self if left == right
+  def self.sort2!(array, start = 0, length = array.length)
+    return array if length < 2
 
-    pivot_idx, pivot = left, self[left]
-    ((left + 1)...right).each do |idx|
-      val = self[idx]
+    pivot_idx = partition(array, start, length)
+
+    sort2!(array, start, pivot_idx - start)
+    sort2!(array, pivot_idx + 1, length - (pivot_idx + 1))
+
+    array
+  end
+
+  def self.partition(array, start, length)
+    pivot_idx, pivot = start, array[start]
+    ((start + 1)...(start + length)).each do |idx|
+      val = array[idx]
       if (val >= pivot)
         # bigger than pivot, leave where it is.
       else
@@ -30,22 +39,19 @@ class Array
 
         # move self[pivot_idx + 1] to idx, which keeps this bigger item
         # to the right of the pivot.
-        self[idx] = self[pivot_idx + 1]
+        array[idx] = array[pivot_idx + 1]
         # move the pivot forward one, to where the larger item used to live.
-        self[pivot_idx + 1] = pivot
+        array[pivot_idx + 1] = pivot
         # move the smaller item to one to the left of the pivot.
-        self[pivot_idx] = val
+        array[pivot_idx] = val
 
         pivot_idx += 1
       end
     end
 
-    self.quick_sort2!(left, pivot_idx)
-    self.quick_sort2!(pivot_idx + 1, right)
-
-    self
+    pivot_idx
   end
 end
 
-fail unless [5, 3, 4, 2, 1, 6].quick_sort1 == [1, 2, 3, 4, 5, 6]
-fail unless [5, 3, 4, 2, 1, 6].quick_sort2! == [1, 2, 3, 4, 5, 6]
+fail unless QuickSort.sort1([5, 3, 4, 2, 1, 6]) == [1, 2, 3, 4, 5, 6]
+fail unless QuickSort.sort2!([5, 3, 4, 2, 1, 6]) == [1, 2, 3, 4, 5, 6]
