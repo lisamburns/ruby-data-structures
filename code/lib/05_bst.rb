@@ -194,6 +194,8 @@ class AVLTreeNode
   end
 end
 
+# TODO: Test me in RSpec!
+
 # Be paranoid and recalculate the depths in case the `@depth` attribute
 # was calculated wrong.
 tree.traverse { |_, vertex| vertex.deep_recalculate_depth! }
