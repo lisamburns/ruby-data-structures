@@ -1,4 +1,4 @@
-require '06a_graph'
+require_relative '06a_graph'
 
 # O(|V|**2 + |E|).
 def dijkstra1(source)

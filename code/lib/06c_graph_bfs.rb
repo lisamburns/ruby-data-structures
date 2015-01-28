@@ -1,4 +1,4 @@
-require '06a_graph'
+require_relative '06a_graph'
 
 # Runs in O(|E|) time.
 def graph_bfs(source)

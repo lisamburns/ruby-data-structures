@@ -10,9 +10,12 @@ class Edge
   attr_reader :to_vertex, :from_vertex, :cost
 
   def initialize(from_vertex, to_vertex, cost = 1)
+    self.from_vertex = from_vertex
+    self.to_vertex = to_vertex
+    self.cost = cost
+
     to_vertex.in_edges << self
-    from_vertex.out_eges << self
-    @cost = cost
+    from_vertex.out_edges << self
   end
 
   def destroy!
@@ -21,4 +24,7 @@ class Edge
     self.from_vertex.in_edges.delete(self)
     self.from_vertex = nil
   end
+
+  protected
+  attr_writer :from_vertex, :to_vertex, :cost
 end
