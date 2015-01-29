@@ -41,7 +41,7 @@ def update_possible_paths(vertex, locked_in_paths, possible_paths)
 
     extended_path_cost = path_to_vertex_cost + e.cost
     next if possible_paths.has_key?(to_vertex) &&
-            possible_paths[to_vertex][:cost] < extended_path_cost
+            possible_paths[to_vertex][:cost] <= extended_path_cost
 
     # We found a better path to `to_vertex`!
     possible_paths[to_vertex] = {

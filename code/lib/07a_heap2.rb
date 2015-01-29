@@ -1,6 +1,6 @@
-# This is a version of the heap code from before with a `reduce!`
-# method. Effectively this just maintains an `index_map` that
-# associates values with indices in the heap.
+# This is an advanced version of the heap code from before with a
+# `reduce!` method. Effectively this just maintains an `index_map`
+# that associates values with indices in the heap.
 
 class BinaryMinHeap
   def initialize(&prc)
@@ -154,29 +154,34 @@ class NumWrapper
   end
 end
 
-heap = BinaryMinHeap.new { |v1, v2| v1.value <=> v2.value }
-heap.push(NumWrapper.new(5))
-heap.push(NumWrapper.new(7))
-heap.push(NumWrapper.new(3))
-heap.push(NumWrapper.new(9))
-heap.push(NumWrapper.new(1))
+def main
+  heap = BinaryMinHeap.new { |v1, v2| v1.value <=> v2.value }
+  heap.push(NumWrapper.new(5))
+  heap.push(NumWrapper.new(7))
+  heap.push(NumWrapper.new(3))
+  heap.push(NumWrapper.new(9))
+  heap.push(NumWrapper.new(1))
 
-vals = (0...5).map { heap.extract.value }
-p vals
-fail unless vals == [1, 3, 5, 7, 9]
+  vals = (0...5).map { heap.extract.value }
+  p vals
+  fail unless vals == [1, 3, 5, 7, 9]
 
-heap = BinaryMinHeap.new { |v1, v2| v1.value <=> v2.value }
-heap.push(nw1 = NumWrapper.new(5))
-heap.push(nw2 = NumWrapper.new(7))
-heap.push(nw3 = NumWrapper.new(3))
-heap.push(nw4 = NumWrapper.new(9))
-heap.push(nw5 = NumWrapper.new(1))
+  heap = BinaryMinHeap.new { |v1, v2| v1.value <=> v2.value }
+  heap.push(nw1 = NumWrapper.new(5))
+  heap.push(nw2 = NumWrapper.new(7))
+  heap.push(nw3 = NumWrapper.new(3))
+  heap.push(nw4 = NumWrapper.new(9))
+  heap.push(nw5 = NumWrapper.new(1))
 
-nw1.value = -1
-heap.reduce!(nw1)
+  nw1.value = -1
+  heap.reduce!(nw1)
 
-nw4.reduce!(4)
+  nw4.value = 4
+  heap.reduce!(nw4)
 
-vals = (0...5).map { heap.extract.value }
-p vals
-fail unless vals == [-1, 1, 3, 4, 7]
+  vals = (0...5).map { heap.extract.value }
+  p vals
+  fail unless vals == [-1, 1, 3, 4, 7]
+end
+
+main if __FILE__ == $PROGRAM_NAME
