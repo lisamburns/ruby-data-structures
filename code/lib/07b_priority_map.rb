@@ -21,11 +21,23 @@ class PriorityMap
     end
   end
 
+  def count
+    self.map.count
+  end
+
+  def empty?
+    count == 0
+  end
+
   def extract
     key = self.queue.extract
     value = self.map.delete(key)
 
     [key, value]
+  end
+
+  def has_key?(key)
+    self.map.has_key?(key)
   end
 
   protected
