@@ -14,18 +14,20 @@ class BinaryMinHeap
     store.length
   end
 
+  def empty?
+    count == 0
+  end
+
   def extract
     raise "no element to extract" if count == 0
 
-    val = store[0]
+    self.class.swap!(store, index_map, 0, self.count - 1)
+
+    val = store.pop
     index_map.delete(val)
 
-    if count > 1
-      store[0] = store.pop
+    unless empty?
       self.class.heapify_down(store, index_map, 0, &prc)
-    else
-      # Last element left.
-      store.pop
     end
 
     val
