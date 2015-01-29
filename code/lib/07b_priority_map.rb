@@ -1,59 +1,59 @@
 require_relative '07a_heap2'
 
-class KVPair
-  attr_accessor :key, :value
-
-  def initialize(key, value)
-    self.key, self.value = key, value
-  end
-end
-
 class PriorityMap
   def initialize(&prc)
     self.map = {}
-    self.queue = BinaryMinHeap.new do |kvpair1, kvpair2|
-      prc.call(kvpair1.value, kvpair2.value)
+    self.queue = BinaryMinHeap.new do |key1, key2|
+      prc.call(self.map[key1], self.map[key2])
     end
   end
 
   def [](key)
     return nil unless self.map.has_key?(key)
-    self.map[key].value
+    self.map[key]
   end
 
-  def insert(key, value)
-    kv_pair = KVPair.new(key, value)
-    self.map[key] = kv_pair
-    self.queue.push(kv_pair)
-
-    nil
+  def []=(key, value)
+    if self.map.has_key?(key)
+      update(key, value)
+    else
+      insert(key, value)
+    end
   end
 
   def extract
-    kv_pair = self.queue.extract
-    self.map.delete(kv_pair.value)
+    key = self.queue.extract
+    value = self.map.delete(key)
 
-    [kv_pair.key, kv_pair.value]
-  end
-
-  def update(key, new_value)
-    kv_pair = self.map[key]
-    kv_pair.value = new_value
-
-    self.queue.reduce!(kv_pair)
+    [key, value]
   end
 
   protected
   attr_accessor :map, :queue
+
+  def insert(key, value)
+    self.map[key] = value
+    self.queue.push(key)
+
+    nil
+  end
+
+  def update(key, value)
+    throw "tried to update non-existent key" unless self.map.has_key?(key)
+    self.map[key] = value
+    self.queue.reduce!(key)
+
+    nil
+  end
 end
 
 # TESTING
 
 def main
   pm = PriorityMap.new { |value1, value2| value1 <=> value2 }
-  pm.insert("A", 10)
-  pm.insert("B", 15)
-  pm.update("B", 5)
+  pm["A"] = 10
+  pm["B"] = 15
+  pm["B"] = 5
 
   p pm
 end
