@@ -4,8 +4,8 @@ require_relative '07b_priority_map'
 # O(|V| + |E|*log(|V|)).
 def dijkstra2(source)
   locked_in_paths = {}
-  possible_paths = PriorityMap.new do |data|
-    data[:cost]
+  possible_paths = PriorityMap.new do |data1, data2|
+    data1[:cost] <=> data2[:cost]
   end
   possible_paths[source] = { cost: 0, last_edge: nil }
 
@@ -33,7 +33,7 @@ def update_possible_paths(vertex, locked_in_paths, possible_paths)
 
     extended_path_cost = path_to_vertex_cost + e.cost
     next if possible_paths.has_key?(to_vertex) &&
-            possible_paths[to_vertex][:cost] < extended_path_cost
+            possible_paths[to_vertex][:cost] <= extended_path_cost
 
     # We found a better path to `to_vertex`! Note that this takes
     # O(log |V|) time, since possible_paths is a PriorityMap, not a
@@ -57,7 +57,11 @@ def main
   Edge.new(v1, v4, 9)
   Edge.new(v3, v4, 2)
 
-  p dijkstra2(v1)
+  output = dijkstra2(v1).map do |v, data|
+    [v.value, data[:cost]]
+  end
+
+  p output
 end
 
 main if __FILE__ == $PROGRAM_NAME
