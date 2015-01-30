@@ -17,7 +17,7 @@ def dijkstra1(source)
     update_possible_paths(vertex, locked_in_paths, possible_paths)
   end
 
-  shortest_paths
+  locked_in_paths
 end
 
 # O(|V|) time, as `possible_paths` has as many as |V| entries.
@@ -50,3 +50,24 @@ def update_possible_paths(vertex, locked_in_paths, possible_paths)
     }
   end
 end
+
+def main
+  v1 = Vertex.new("A")
+  v2 = Vertex.new("B")
+  v3 = Vertex.new("C")
+  v4 = Vertex.new("D")
+
+  Edge.new(v1, v2, 10)
+  Edge.new(v1, v3, 5)
+  Edge.new(v3, v2, 3)
+  Edge.new(v1, v4, 9)
+  Edge.new(v3, v4, 2)
+
+  output = dijkstra1(v1).map do |v, data|
+    [v.value, data[:cost]]
+  end
+
+  p output
+end
+
+main if __FILE__ == $PROGRAM_NAME
