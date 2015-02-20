@@ -229,8 +229,8 @@ contains less than one element. Some buckets may be large if there are
 a lot of **collisions**; the worst case time complexity is `O(n)`. But
 for some bucket to be larger, another needs to be smaller, so if you
 call `insert?` for `k` different values, over time you expect the
-running time to be `O(k)`, regardless of the number of elements in the
-set.
+running time to be `O(k)` (i.e., an average of `O(1)` per value),
+regardless of the number of elements in the set.
 
 Also: the worst-case becomes less and less likely as you add more and
 more elements to the set. If you have 10 elements, it's possible that
