@@ -49,8 +49,8 @@ A straightforward way to find the most similar pair of cats is like so:
 ```ruby
 def best_pair(cat_profiles)
   best_pair, best_similarity = nil, nil
-  profiles.each do |(cat1, profile1)|
-    profiles.each do |(cat2, profile2)|
+  cat_profiles.each do |(cat1, profile1)|
+    cat_profiles.each do |(cat2, profile2)|
       next if cat1 == cat2
 
       # we won't get into how two profiles are compared.
@@ -91,7 +91,7 @@ choices for the first cat, and `n-1` choices for a second, different
 cat. That means there are `n(n-1)` pairs.
 
 However, notice that the pair `(markov, curie)` and `(curie, markov)`
-both contain the same two cats. Every pair has a twin the reverses the
+both contain the same two cats. Every pair has a twin in reverse
 order. So the total number of *unordered pairs* is `n(n-1)/2`.
 
 Using this equation, we have:
@@ -103,7 +103,7 @@ TIME_TO_RUN_ALGORITHM =
 ```
 
 I've continued to use `n` to stand for the number of cats. Now, if we
-know the number of cats and the times it takes to profile a cat and
+know the number of cats and the time it takes to profile a cat and
 compare two profiles, we can calculate the time for the whole
 algorithm.
 
@@ -181,7 +181,7 @@ to 0% of the total time.
 
 When we have 100,000 cats, we saw that Phase I takes 2% of the total
 time. So a 100x improvement in Phase I will reduce the total runtime
-by 1.8%. On the other hand, optimizing Phase II by 1% will result in a
+by 1.8%. On the other hand, optimizing Phase II by 5% will result in a
 savings of `(98% * 5%) = 4.9%` of total time.
 
 As we have even more cats, the time savings of optimizing Phase I will
