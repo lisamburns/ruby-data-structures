@@ -22,7 +22,7 @@ pseudo-code, we could write something like:
 
 ```ruby
 def cat_profiles(cats)
-  # using each explicitly for clarity later; you should use `map`
+  # using each explicitly for clarity; later you should use `map`
   cat_profiles = []
   cats.each do |cat|
     # we won't get into how an individual cat is profiled.
