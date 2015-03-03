@@ -69,7 +69,7 @@ the elements need to be merged at each level.
 
 ```
 def quick_sort(arr, start_idx = 0, len = arr.length)
-  return if len < 2
+  return arr if len < 2
 
   # choose pivot in middle
   mid_idx = start_idx + (len / 2)
