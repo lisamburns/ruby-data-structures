@@ -132,7 +132,7 @@ long.
 
 On the other hand, the time for Phase II grows **quadratically** in
 the number of cats: if we 10x the number of cats, Phase II takes
-nearly 100x as long.
+approximately 100x as long.
 
 We say that Phase II **dominates** Phase I as the number of cats
 increases. With 10 cats, Phase II takes 0.45% of the total time. With
