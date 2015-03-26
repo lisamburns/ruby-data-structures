@@ -55,7 +55,7 @@ def best_pair(cat_profiles)
 
       # we won't get into how two profiles are compared.
       similarity = similarity(profile1, profile2)
-      next if best_similarity && best_similarity < similarity
+      next if best_similarity && best_similarity > similarity
 
       best_pair, best_similarity = [cat1, cat2], best_similarity
     end
