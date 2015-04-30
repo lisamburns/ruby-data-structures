@@ -38,6 +38,9 @@ insert). When are they ever useful?
 * End-to-end scans, removing/inserting elements along the way can be
   done competitively. But you can do this using a second array, though
   this requires `O(n)` extra memory. (the `select!` example)
+    * Actually, you can do `select!` in `O(1)` extra space if you copy
+      stuff toward the bottom.
+    * Likewise the Josephus problem.
 * LinkedLists are sometimes used for queues. However, a ring buffer can
   do this, too. On the other hand, this has variable latency.
 * Best use case is when you jump right into the middle, **LRUCache**.
