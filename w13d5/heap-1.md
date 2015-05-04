@@ -6,8 +6,9 @@
 * Depth of tree as related to number of elements.
     * Derivation of the max size of 32 bit number.
 * Examples:
-    * Priority Queue
-    * Dijkstra's algorithm
+    * Producer/Consumer: emails.
+    * Dijkstra's algorithm: discovery.
+    * Interactive voting for next song to play.
     * Heapsort
     * kth min element
         * Can be done in O(k log n) if you build the heap in O(n) time.
