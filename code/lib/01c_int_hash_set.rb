@@ -22,7 +22,7 @@ class IntHashSet
     return false if include?(value)
 
     # Resize if we would exceed max load. Is O(n), but happens
-    # infrequently, so amoritzed O(1)
+    # infrequently, so amortized O(1)
     self.resize! if (count + 1).fdiv(buckets.length) > MAX_LOAD
 
     # DynamicArray push is O(1) amortized
