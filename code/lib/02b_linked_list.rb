@@ -25,7 +25,7 @@ class SentinelLink < Link
     elsif link.nil?
       # the last sentinel may allow superfluous set of next to `nil`.
     else
-      raise "can't set prev of last sentinel"
+      raise "can't set next of last sentinel"
     end
   end
 
