@@ -5,6 +5,12 @@
     * Topological Sort
     * BFS shortest paths
     * Dijkstra's Algorithm
+        * Explain Dijkstra as a growing civilization. Always annex the
+          place closest to your capital.
+        * There's like a "fog of war" type thing where you can't see
+          stuff except on the frontier of your civilization.
+        * Imagine some mountains between you and stuff across your
+          border.
     * Prim's Algorithm
     * Floyd-Warshall Algorithm
 
