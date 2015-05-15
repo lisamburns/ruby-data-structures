@@ -35,3 +35,8 @@
           the right).
         * This removes an element in a leaf node. You may need to
           rebalance with the above procedure.
+* B+ tree: all keys/values in leaves.
+    * Higher branching factor acheivable.
+    * Leaves typically linked in a list, for easy in-order
+      iteration. But I don't see why in-order traversal of a tree is
+      so hard...
