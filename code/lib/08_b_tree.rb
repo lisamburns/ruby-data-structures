@@ -89,11 +89,8 @@ class BTreeNode
     idx = values.sorted_insert(new_value)
     children.insert(idx, new_node) unless leaf?
 
-    if size > max_size
-      return _split!
-    end
-
-    nil
+    # careful to return new root if we are splitting.
+    (size > max_size) ? _split! : nil
   end
 
   def _split!
@@ -101,7 +98,7 @@ class BTreeNode
 
     left = BTreeNode.new(max_size, parent, [], leaf? ? nil : [])
     until left.size >= left.min_size
-      left.values << values.shift
+      left.values << values.shift 
       left._append_child(children.shift) unless leaf?
     end
 
@@ -111,8 +108,8 @@ class BTreeNode
     if root?
       new_root = BTreeNode.new(max_size, nil, [], [])
       new_root.values << new_split_value
-      new_root.children << left << self
-      left.parent = self.parent = new_root
+      new_root._append_child(left)
+      new_root._append_child(self)
       return new_root
     else
       return parent._insert(new_split_value, left)
