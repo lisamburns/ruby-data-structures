@@ -84,9 +84,11 @@ Say:
 
 f_1 in O(g_1),
 f_2 in O(g_2),
-AND g_2 dominates g_1.
+AND g_2 is not dominated by g_1.
 
-Then:
+If f(n) = f_1(n) + f_2(n), then f is in O(g_n).
+
+Proof:
 
 lim_{n -> ∞} (f_1(n) + f_2(n)) / (g_2(n))
     = (lim_{n -> ∞} f_1(n) / g_2(n)) + (lim_{n -> ∞} f_2(n) / g_2(n))
