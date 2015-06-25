@@ -53,30 +53,40 @@ algorithm does not run *too* fast.
 
 Basically, the math is harder, so we don't do it.
 
-## Two Big O Theorems
+## Some Big O Theorems
 
 ```
 Say:
-f_1 is dominated by f_2,
-f_2 is dominated by f_3,
-THEN f_1 is dominated by f_3.
+f_1 is in O(f_2),
+f_2 is in O(f_3),
+THEN f_1 is in O(f_3).
 
 Proof:
 
-We know that as n approaches infinity, f_2(n)/f_3(n) approaches zero.
-That means that there exists an N such that `f_3(n) > f_2(n)` for all
-`n > N`.
+Since f_2 is in O(f_3), there exists an M and N such that, for all
+n>N, f_2(n)/f_3(n) < M (otherwise the limit would not exist or be
+infinity). So:
 
-Thus, for `n > N`, `f_1(n)/f_2(n)` > `f_1(n)/f_3(n)`. Since the first
-ratio approaches zero, the second must too.
+f_1(n)/f_3(n) = (f_1(n)/f_2(n)) * (f_2(n)/f_3(n)) < M * f_1(n)/f_2(n)
 
-Therefore, f_3 dominates f_1.
+But we know that f_1 is in O(f_2), so the limit of f_1(n)/f_2(n) is
+non-infinite. Multiplying this by the constant M results in a limit
+which is also finite, so f_1 is in O(f_3).
 ```
+
+An immediate corrolary is that if:
+
+```
+If f in O(g) and g in O(f), then O(g) = O(f).
+```
+
+For this reason, we never say things like `O(2n**2)`; instead we
+simplify and say `O(n**2)`.
 
 We've seen that Phase I of CatMatch is `O(n)` while Phase II is
 `O(n**2)`. What is the time complexity of CatMatch overall?
 
-The time complexity of an algorithm is always the maximum of the time
+The time complexity of an algorithm is always the worst of the time
 complexities of its components.
 
 ```
@@ -84,22 +94,23 @@ Say:
 
 f_1 in O(g_1),
 f_2 in O(g_2),
-AND g_2 is not dominated by g_1.
+AND g_1 is in O(g_2).
 
-If f(n) = f_1(n) + f_2(n), then f is in O(g_n).
+THEN, if f(n) = f_1(n) + f_2(n), f is in O(g_2).
 
 Proof:
 
 lim_{n -> ∞} (f_1(n) + f_2(n)) / (g_2(n))
     = (lim_{n -> ∞} f_1(n) / g_2(n)) + (lim_{n -> ∞} f_2(n) / g_2(n))
 
-We know that the first part is < ∞ because f_2 does not dominate g_2.
+Since f_1 is in O(g_1), and g_1 is in O(g_2), then f_1 must be in
+O(g_2), by the transitivity theorem above. Therefore the first limit
+is equal to zero.
 
-We know the second part is < ∞ because f_1 is dominated by g_1, which
-is in turn dominated by g_2.
+We know the second limit is finite, since f_2 must not dominate g_2,
+or else it would not be in O(g_2).
 
-Thus the sum of the limits is less than infinity. Thus f_1 + f_2 does
-not dominate g_2, which means the sum f_1 + f_2 is in O(g_2).
+Therefore the sum of the limits is finite, so f is in O(g_2).
 ```
 
 In simple terms: the time complexity of the worst bottleneck in your
