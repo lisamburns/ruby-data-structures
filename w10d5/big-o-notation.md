@@ -36,8 +36,8 @@ dominate each other, there is a second set we use sometimes called
     Θ(f) = { g | g does not dominate f, and f does not dominate g }
 
 This is often called "big theta". Big theta is more specific than big
-O: when we say `g` is in `O(f)`, we are saying that `f` does not grow
-to dominate `f`. When we say `g` is in `Θ(f)`, we are saying that `f`
+O: when we say `g` is in `O(f)`, we are saying that `g` does not grow
+to dominate `f`. When we say `g` is in `Θ(f)`, we are saying that `g`
 does not grow to dominate `f`, AND `g` grows at fast enough to keep up
 with `f`.
 
