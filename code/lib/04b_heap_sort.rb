@@ -2,7 +2,7 @@ require_relative '03_heap'
 
 class Array
   def heap_sort!
-    2.upto(count - 1).each do |heap_sz|
+    2.upto(count).each do |heap_sz|
       BinaryMinHeap.heapify_up(self, heap_sz - 1, heap_sz)
     end
 
@@ -16,3 +16,4 @@ class Array
 end
 
 fail unless [6, 3, 4, 5, 1, 2].heap_sort! == [1, 2, 3, 4, 5, 6]
+fail unless [1, 4, 7, 0].heap_sort! == [0, 1, 4, 7]
