@@ -22,6 +22,7 @@ class Link
     end
     self.next = link
     link.prev = self
+    return link
   end
 
   def remove
