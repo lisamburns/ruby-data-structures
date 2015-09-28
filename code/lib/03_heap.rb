@@ -12,6 +12,10 @@ class BinaryMinHeap
     [2*idx + 1, 2*idx + 2].select {|i| i < len }
   end
 
+  def peek
+    self.store[0]
+  end
+
   def self.parent_index(idx)
     raise "root has no parent" if idx == 0
     return (idx - 1)/2
