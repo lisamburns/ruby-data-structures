@@ -5,7 +5,6 @@ class SentinelNode < Link
     super(type)
   end
 
-
 end
 
 class LinkedList # A class that does NOT use sentinel nodes, hence O(n) push and pop
