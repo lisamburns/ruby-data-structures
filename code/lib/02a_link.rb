@@ -24,11 +24,12 @@ class Link
     link.prev = self
   end
 
-  def remove()
-    self.prev.next = self.next
-    self.next.prev = self.prev
+  def remove
+    self.prev.next = self.next if self.prev
+    self.next.prev = self.prev if self.next
     self.next = nil
     self.prev = nil
+    return self
   end
 
 end
